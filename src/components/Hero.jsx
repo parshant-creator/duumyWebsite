@@ -66,6 +66,14 @@ export default function Hero() {
       changeSlide("prev")
     }
   }
+  const goToSlide = (index) => {
+  setShowImage(false);
+
+  setTimeout(() => {
+    setCurrentIndex(index);
+    setShowImage(true);
+  }, 500);
+};
   return (
     <section
       onTouchStart={handleTouchStart}
@@ -122,7 +130,7 @@ export default function Hero() {
         {heroData.map((item, index) => (
           <button
             key={item.id}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => goToSlide(index)}
             className={`h-2 rounded-full transition-all duration-300 ${
               index === currentIndex
                 ? "w-6 sm:w-8 bg-amber-600"
