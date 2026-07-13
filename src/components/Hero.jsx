@@ -1,72 +1,30 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
+import heroData from "../data/heroData";
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImage, setShowImage] = useState(true);
 
-  const heroImage = [
-    {
-      id: 1,
-      img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-      title: "Smart Watches Collection",
-      subtitle: "Premium Quality Smart Watches",
-      brand: "Apple",
-      buttonText: "Shop Now",
-      bgColor: "#F5F5F5",
-    },
-    {
-      id: 2,
-      img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-      title: "Running Shoes",
-      subtitle: "Comfort Meets Performance",
-      brand: "Nike",
-      buttonText: "Explore",
-      bgColor: "#FFF4E6",
-    },
-    {
-      id: 3,
-      img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723",
-      title: "Summer Fashion",
-      subtitle: "Up to 50% OFF",
-      brand: "Zara",
-      buttonText: "Buy Now",
-      bgColor: "#FDECEC",
-    },
-    {
-      id: 4,
-      img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518",
-      title: "Men's T-Shirts",
-      subtitle: "Latest Trend Collection",
-      brand: "H&M",
-      buttonText: "View Collection",
-      bgColor: "#EEF7FF",
-    },
-  ];
-
-  const heroSlider = heroImage[currentIndex];
-  const handleNextButton = () => {
+  const heroSlider = heroData[currentIndex];
+  const changeSlide = (direction) => {
     setShowImage(false);
-   setTimeout(()=>{
- setCurrentIndex((prev) => (prev + 1) % heroImage.length);
+    setTimeout(() => {
+      if (direction === "next") {
+        setCurrentIndex((prev) => (prev + 1) % heroData.length);
+      } else {
+        setCurrentIndex((prev) =>
+          prev === 0 ? heroData.length - 1 : prev - 1,
+        );
+      }
       setShowImage(true);
-   },500)
-    
-  };
-
-  const handlePrevButton = () => {
-    setShowImage(false);
-   setTimeout(()=>{
-        setCurrentIndex((prev) => (prev === 0 ? heroImage.length - 1 : prev - 1));
-      setShowImage(true);
-   },500)
+    }, 500);
   };
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowRight") {
-        handleNextButton();
+        changeSlide("next");
       } else if (e.key === "ArrowLeft") {
-        handlePrevButton();
+        changeSlide("prev");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -76,33 +34,39 @@ export default function Hero() {
   }, []);
 
   const intervalRef = useRef(null);
-  useEffect(() => {
+  const startSlider = () => {
+    clearInterval(intervalRef.current);
     const interval = setInterval(() => {
-      handleNextButton();
+      changeSlide("next");
     }, 3000);
     intervalRef.current = interval;
-    return () => clearInterval(interval);
-  }, []);
+  };
   const handlemouseHover = () => {
-    console.log("mouse enter");
     clearInterval(intervalRef.current);
   };
   const handleMouseLeave = () => {
-    clearInterval(intervalRef.current);
-    console.log("mouse leave");
-    intervalRef.current = setInterval(() => {
-      handleNextButton();
-    }, 3000);
+    startSlider();
   };
+  useEffect(() => {
+    startSlider();
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  const touchStart = useRef(0);
+  const handleTouchStart = (e)=>{
+   const first = e.touches[0].clientX
+   console.log(first)
+  }
   return (
     <section
+      onTouchStart={handleTouchStart}
       onMouseEnter={handlemouseHover}
       onMouseLeave={handleMouseLeave}
       className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
       style={{ background: heroSlider.bgColor }}
     >
       <button
-        onClick={handlePrevButton}
+        onClick={() => changeSlide("prev")}
         className={`hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition`}
@@ -136,7 +100,7 @@ export default function Hero() {
         </div>
       </div>
       <button
-        onClick={handleNextButton}
+        onClick={() => changeSlide("next")}
         className={`hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition
@@ -145,7 +109,7 @@ export default function Hero() {
         <ChevronRight size={24} />
       </button>
       <div className="flex items-center justify-center gap-1 sm:gap-2 mt-4">
-        {heroImage.map((item, index) => (
+        {heroData.map((item, index) => (
           <button
             key={item.id}
             onClick={() => setCurrentIndex(index)}
