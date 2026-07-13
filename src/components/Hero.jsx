@@ -54,12 +54,22 @@ export default function Hero() {
 
   const touchStart = useRef(0);
   const handleTouchStart = (e)=>{
-   const first = e.touches[0].clientX
-   console.log(first)
+    touchStart.current = e.touches[0].clientX
+  }
+  const handleTouchEnd = (e)=>{
+    const end = e.changedTouches[0].clientX
+    const diff = touchStart.current - end;
+    console.log(diff)
+    if(diff > 50){
+      changeSlide("next")
+    }else if(diff < -50 ){
+      changeSlide("prev")
+    }
   }
   return (
     <section
       onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       onMouseEnter={handlemouseHover}
       onMouseLeave={handleMouseLeave}
       className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
