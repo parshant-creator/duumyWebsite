@@ -1,8 +1,9 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showImage, setShowImage] = useState(true);
 
   const heroImage = [
     {
@@ -44,91 +45,118 @@ export default function Hero() {
   ];
 
   const heroSlider = heroImage[currentIndex];
-const handleNextButton = () => {
-  setCurrentIndex((prev) => (prev + 1) % heroImage.length);
-};
-  const handlePrevButton = () => {
-    setCurrentIndex((prev)=>prev === 0? heroImage.length -1 : prev -1)
+  const handleNextButton = () => {
+    setShowImage(false);
+   setTimeout(()=>{
+ setCurrentIndex((prev) => (prev + 1) % heroImage.length);
+      setShowImage(true);
+   },500)
+    
   };
-    useEffect(()=>{
-    const handleKeyDown = (e)=>{
-      if(e.key ==="ArrowRight"){
+
+  const handlePrevButton = () => {
+    setShowImage(false);
+   setTimeout(()=>{
+        setCurrentIndex((prev) => (prev === 0 ? heroImage.length - 1 : prev - 1));
+      setShowImage(true);
+   },500)
+  };
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowRight") {
         handleNextButton();
-      }else if(e.key ==="ArrowLeft"){
+      } else if (e.key === "ArrowLeft") {
         handlePrevButton();
       }
-    }
-    window.addEventListener("keydown",handleKeyDown);
-    return ()=>{
-      window.removeEventListener("keydown",handleKeyDown);
-    } 
-  },[]); 
-   useEffect(()=>{
-    const interval = setInterval(()=>{
-      handleNextButton()
-    },3000)
-  return ()=> clearInterval(interval)
-},[])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const intervalRef = useRef(null);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNextButton();
+    }, 3000);
+    intervalRef.current = interval;
+    return () => clearInterval(interval);
+  }, []);
+  const handlemouseHover = () => {
+    console.log("mouse enter");
+    clearInterval(intervalRef.current);
+  };
+  const handleMouseLeave = () => {
+    clearInterval(intervalRef.current);
+    console.log("mouse leave");
+    intervalRef.current = setInterval(() => {
+      handleNextButton();
+    }, 3000);
+  };
   return (
-  <section className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
-  style={{background:heroSlider.bgColor}}
-  >
- <button
-    onClick={handlePrevButton}
-    className={`hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2
+    <section
+      onMouseEnter={handlemouseHover}
+      onMouseLeave={handleMouseLeave}
+      className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
+      style={{ background: heroSlider.bgColor }}
+    >
+      <button
+        onClick={handlePrevButton}
+        className={`hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition`}
-  >
-    <ChevronLeft size={24} />
-  </button>
-  <div className="max-w-7xl mx-auto h-full sm:h-full flex items-center justify-between px-4">
-    <div className="w-1/2 flex flex-col gap-2">
-     <span className="text-red-500 font-semibold uppercase tracking-widest">
-        {heroSlider.brand}
-      </span>
-
-      <h1 className="text-xl sm:text-3xl md:text-6xl font-bold leading-tight">
-        {heroSlider.title}
-      </h1>
-
-     <p className="text-gray-700 text-xs sm:text-base md:text-lg">
-        {heroSlider.subtitle}
-      </p>
-
-      <button className="bg-black text-white w-fit px-3 py-2 sm:px-4 rounded-lg text-xs sm:text-base hover:bg-gray-800 transition">
-        {heroSlider.buttonText}
+      >
+        <ChevronLeft size={24} />
       </button>
-    </div>
-   <div className="w-1/2 h-[180px] sm:h-[250px] md:h-[400px] flex items-center justify-center">
-  <img
-    src={heroSlider.img}
-    alt={heroSlider.title}
-    className="w-full h-full object-contain"
-  />
-</div>
-  </div>
-   <button
-    onClick={handleNextButton}
-    className={`hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2
+      <div className="max-w-7xl mx-auto h-full sm:h-full flex items-center justify-between px-4">
+        <div className="w-1/2 flex flex-col gap-2">
+          <span className="text-red-500 font-semibold uppercase tracking-widest">
+            {heroSlider.brand}
+          </span>
+
+          <h1 className="text-xl sm:text-3xl md:text-6xl font-bold leading-tight">
+            {heroSlider.title}
+          </h1>
+
+          <p className="text-gray-700 text-xs sm:text-base md:text-lg">
+            {heroSlider.subtitle}
+          </p>
+
+          <button className="bg-black text-white w-fit px-3 py-2 sm:px-4 rounded-lg text-xs sm:text-base hover:bg-gray-800 transition">
+            {heroSlider.buttonText}
+          </button>
+        </div>
+        <div className="w-1/2 h-[180px] sm:h-[250px] md:h-[400px] flex items-center justify-center">
+          <img
+            src={heroSlider.img}
+            alt={heroSlider.title}
+            className={`w-full h-full object-contain transition-opacity duration-500 ${showImage ? "opacity-100" : "opacity-0"}`}
+          />
+        </div>
+      </div>
+      <button
+        onClick={handleNextButton}
+        className={`hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition
 `}
-  >
-    <ChevronRight size={24} />
-  </button>
-  <div className="flex items-center justify-center gap-1 sm:gap-2 mt-4">
-  {heroImage.map((item, index) => (
-    <button
-      key={item.id}
-      onClick={() => setCurrentIndex(index)}
-      className={`h-2 rounded-full transition-all duration-300 ${
-        index === currentIndex
-          ? "w-6 sm:w-8 bg-amber-600"
-          : "w-2 bg-white border border-gray-300"
-      }`}
-    />
-  ))}
-</div>
-  </section>
+      >
+        <ChevronRight size={24} />
+      </button>
+      <div className="flex items-center justify-center gap-1 sm:gap-2 mt-4">
+        {heroImage.map((item, index) => (
+          <button
+            key={item.id}
+            onClick={() => setCurrentIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "w-6 sm:w-8 bg-amber-600"
+                : "w-2 bg-white border border-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
