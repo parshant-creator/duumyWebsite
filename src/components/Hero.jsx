@@ -70,7 +70,7 @@ const handleNextButton = () => {
   return ()=> clearInterval(interval)
 },[])
   return (
-  <section className="relative h-[45vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
+  <section className="relative h-[40vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
   style={{background:heroSlider.bgColor}}
   >
  <button
