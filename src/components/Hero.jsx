@@ -3,10 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import heroData from "../data/heroData";
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false)
   const [showImage, setShowImage] = useState(true);
 
   const heroSlider = heroData[currentIndex];
   const changeSlide = (direction) => {
+    if(isAnimating) return;
+    setIsAnimating(true)
     setShowImage(false);
     setTimeout(() => {
       if (direction === "next") {
@@ -17,6 +20,7 @@ export default function Hero() {
         );
       }
       setShowImage(true);
+      setIsAnimating(false)
     }, 500);
   };
   useEffect(() => {
