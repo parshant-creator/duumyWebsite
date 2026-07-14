@@ -71,6 +71,7 @@ export default function Hero() {
     }
   }
   const goToSlide = (index) => {
+    if (index === currentIndex || isAnimating) return;
     if(isAnimating) return;
     setIsAnimating(true)
   setShowImage(false);
