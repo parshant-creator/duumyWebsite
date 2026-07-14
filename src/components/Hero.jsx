@@ -71,11 +71,13 @@ export default function Hero() {
     }
   }
   const goToSlide = (index) => {
+    if(isAnimating) return;
+    setIsAnimating(true)
   setShowImage(false);
-
   setTimeout(() => {
     setCurrentIndex(index);
     setShowImage(true);
+    setIsAnimating(false)
   }, 500);
 };
   return (
