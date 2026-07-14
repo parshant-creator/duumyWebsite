@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import heroData from "../data/heroData";
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false);
   const [showImage, setShowImage] = useState(true);
 
   const heroSlider = heroData[currentIndex];
   const changeSlide = (direction) => {
-    if(isAnimating) return;
-    setIsAnimating(true)
+    if (isAnimating) return;
+    setIsAnimating(true);
     setShowImage(false);
     setTimeout(() => {
       if (direction === "next") {
@@ -20,15 +20,24 @@ export default function Hero() {
         );
       }
       setShowImage(true);
-      setIsAnimating(false)
+      setIsAnimating(false);
     }, 500);
+  }; 
+  const intervalRef = useRef(null);
+  const startSlider = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      changeSlide("next");
+    }, 3000);
   };
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowRight") {
         changeSlide("next");
+        startSlider()
       } else if (e.key === "ArrowLeft") {
         changeSlide("prev");
+        startSlider()
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -37,14 +46,7 @@ export default function Hero() {
     };
   }, []);
 
-  const intervalRef = useRef(null);
-  const startSlider = () => {
-    clearInterval(intervalRef.current);
-    const interval = setInterval(() => {
-      changeSlide("next");
-    }, 3000);
-    intervalRef.current = interval;
-  };
+
   const handlemouseHover = () => {
     clearInterval(intervalRef.current);
   };
@@ -56,31 +58,36 @@ export default function Hero() {
     return () => clearInterval(intervalRef.current);
   }, []);
 
-  const touchStart = useRef(0);
-  const handleTouchStart = (e)=>{
-    touchStart.current = e.touches[0].clientX
-  }
-  const handleTouchEnd = (e)=>{
-    const end = e.changedTouches[0].clientX
-    const diff = touchStart.current - end;
-    console.log(diff)
-    if(diff > 50){
-      changeSlide("next")
-    }else if(diff < -50 ){
-      changeSlide("prev")
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const distance = touchStartX.current - touchEndX;
+
+    if (distance > 60) {
+      changeSlide("next");
+      startSlider();
+    } else if (distance < -60) {
+      changeSlide("prev");
+      startSlider();
     }
-  }
+  };
+
   const goToSlide = (index) => {
     if (index === currentIndex || isAnimating) return;
-    if(isAnimating) return;
-    setIsAnimating(true)
-  setShowImage(false);
-  setTimeout(() => {
-    setCurrentIndex(index);
-    setShowImage(true);
-    setIsAnimating(false)
-  }, 500);
-};
+    setIsAnimating(true);
+    setShowImage(false);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setShowImage(true);
+      setIsAnimating(false);
+      startSlider()
+    }, 500);
+  };
   return (
     <section
       onTouchStart={handleTouchStart}
@@ -91,7 +98,10 @@ export default function Hero() {
       style={{ background: heroSlider.bgColor }}
     >
       <button
-        onClick={() => changeSlide("prev")}
+        onClick={() => {
+          changeSlide("prev");
+          startSlider();
+        }}
         className={`hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition`}
@@ -100,19 +110,19 @@ export default function Hero() {
       </button>
       <div className="max-w-7xl mx-auto h-full sm:h-full flex items-center justify-between px-4">
         <div className="w-1/2 flex flex-col gap-2">
-          <span className="text-red-500 font-semibold uppercase tracking-widest">
+          <span className={`text-red-500 font-semibold uppercase tracking-widest transition-opacity duration-500 ${showImage ? "opacity-100" : "opacity-0"}`}>
             {heroSlider.brand}
           </span>
 
-          <h1 className="text-xl sm:text-3xl md:text-6xl font-bold leading-tight">
+          <h1 className={`text-xl sm:text-3xl md:text-6xl font-bold leading-tight transition-opacity duration-500 ${showImage ? "opacity-100" : "opacity-0"}`}>
             {heroSlider.title}
           </h1>
 
-          <p className="text-gray-700 text-xs sm:text-base md:text-lg">
+          <p className={`text-gray-700 text-xs sm:text-base md:text-lg transition-opacity ${showImage ? "opacity-100" : "opacity-0"}`}>
             {heroSlider.subtitle}
           </p>
 
-          <button className="bg-black text-white w-fit px-3 py-2 sm:px-4 rounded-lg text-xs sm:text-base hover:bg-gray-800 transition">
+          <button className={`bg-black text-white w-fit px-3 py-2 sm:px-4 rounded-lg text-xs sm:text-base hover:bg-gray-800 transition-opacity duration-500 ${showImage ? "opacity-100" : "opacity-0"}`}>
             {heroSlider.buttonText}
           </button>
         </div>
@@ -125,7 +135,10 @@ export default function Hero() {
         </div>
       </div>
       <button
-        onClick={() => changeSlide("next")}
+        onClick={() => {
+          changeSlide("next");
+          startSlider();
+        }}
         className={`hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2
     h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg
     transition
