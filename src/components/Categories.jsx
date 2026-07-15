@@ -21,7 +21,7 @@ export default function Categories() {
   return (
     <section className=" mt-12 min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto">
-        <ul className="flex gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar">
+        <ul className="flex py-2 px-2 gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar">
           {categories.map((item, index) => (
             <li
               onClick={() => handleClick(item)}
@@ -36,10 +36,11 @@ export default function Categories() {
           <h4 className="flex justify-center items-center">Loading...</h4>
         ):(
         <div
-          className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 p-4 items-stretch gap-4 transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+          className={`flex overflow-x-auto hider-scrollbar gap-4 p-4 sm:grid sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4
+    xl:grid-cols-5   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
         >
           {filterProducts.map((product) => (
-            <ProductCard product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
         )}
