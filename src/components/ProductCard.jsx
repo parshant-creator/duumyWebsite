@@ -29,7 +29,7 @@ duration-300"
       </button>
 
       <div className="h-48 flex justify-center items-center">
-        <img className="h-full w-full object-contain" alt="img" />
+        <img src={product.image} className="h-full w-full object-contain" alt="img" />
       </div>
       <div className="flex flex-col gap-2 flex-1 text-gray-600">
         <h4 className="h-12 font-medium hover:text-black hover:underline">

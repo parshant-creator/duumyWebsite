@@ -19,7 +19,7 @@ const heroData = [
   },
   {
     id: 3,
-    img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723",
+    img: "https://images.pexels.com/photos/1488463/pexels-photo-1488463.jpeg",
     title: "Summer Fashion",
     subtitle: "Up to 50% OFF",
     brand: "Zara",
