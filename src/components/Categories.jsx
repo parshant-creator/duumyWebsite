@@ -2,22 +2,28 @@ import { useState } from "react";
 import categories from "../data/categories";
 import products from "../data/products";
 import ProductCard from "./ProductCard";
-export default function Categories() {
+import NoProducts from "./NoProducts";
+
+export default function Categories({searchTerm}) {
   const [activeTab, setActiveTab] = useState("For You");
   const [loading, setLoading] = useState(false);
   const handleClick = (category) => {
     setLoading(true);
-
-    
     setTimeout(() => {
       setActiveTab(category);
       setLoading(false);
     }, 300);
   };
-  const filterProducts =
+  const categoryProducts =
     activeTab === "For You"
       ? products
       : products.filter((product) => product.category === activeTab);
+const filteredProducts = categoryProducts.filter((product)=>
+  product.name
+.toLowerCase()
+.includes(searchTerm.toLowerCase())
+)
+
   return (
     <section className=" mt-12 min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -39,9 +45,14 @@ export default function Categories() {
           className={`flex overflow-x-auto hider-scrollbar gap-4 p-4 sm:grid sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4
     xl:grid-cols-5   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
         >
-          {filterProducts.map((product) => (
+          {filteredProducts.length > 0 ?(
+          filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
-          ))}
+          ))):(
+            <div className="col-span-full">
+            <NoProducts />
+            </div>
+          )}
         </div>
         )}
         
