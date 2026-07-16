@@ -94,8 +94,8 @@ export default function Hero() {
       onTouchEnd={handleTouchEnd}
       onMouseEnter={handlemouseHover}
       onMouseLeave={handleMouseLeave}
-      className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] bg-gradient-to-b from-green-600 via-green-400 to-green-200"
-      style={{ background: heroSlider.bgColor }}
+      className="relative h-[30vh] sm:h-[55vh] md:h-[65vh] p-8 "
+      
     >
       <button
         onClick={() => {
@@ -108,7 +108,7 @@ export default function Hero() {
       >
         <ChevronLeft size={24} />
       </button>
-      <div className="max-w-7xl mx-auto h-full sm:h-full flex items-center justify-between px-4">
+      <div className="max-w-7xl mx-auto h-full sm:h-full rounded-md flex items-center justify-between px-4" style={{ background: heroSlider.bgColor }}>
         <div className="w-1/2 flex flex-col gap-2">
           <span className={`text-red-500 font-semibold uppercase tracking-widest transition-opacity duration-500 ${showImage ? "opacity-100" : "opacity-0"}`}>
             {heroSlider.brand}

@@ -1,4 +1,4 @@
-import { Star, Heart, ShoppingCart , Circle} from "lucide-react";
+import { Star, Heart, ShoppingCart} from "lucide-react";
 import { useState } from "react";
 export default function ProductCard({ product }) {
   const [wishList, setWishList] = useState(false);
@@ -15,7 +15,7 @@ duration-300"
     >
       <button
         onClick={handleWishList}
-        className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2"
+        className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2 z-50"
       >
         <Heart
           size={18}
