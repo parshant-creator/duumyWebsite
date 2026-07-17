@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import categories from "../data/categories";
 import products from "../data/products";
 import ProductCard from "./ProductCard";
@@ -81,7 +82,9 @@ export default function Categories({ searchTerm }) {
           >
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <Link key={product.id} to={`/product/${product.id}`}>
+                <ProductCard product={product} />
+                </Link>
               ))
             ) : (
               <div className="col-span-full">
