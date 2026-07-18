@@ -1,6 +1,7 @@
 import { ShoppingCart, Search , UserRound,  X} from "lucide-react";
 import { useState } from "react";
 import { useSelector} from 'react-redux'
+import { Link } from "react-router-dom";
 export default function Header({searchTerm,setSearchTerm}) {
     const {totalQuantity} = useSelector((state)=>state.cart)
   const[menuItem , setMenuItem]=useState(false)
@@ -19,9 +20,11 @@ export default function Header({searchTerm,setSearchTerm}) {
             </div>
             
             <div className="flex gap-4 items-center cursor-pointer font-medium">
+                <Link to={"/cart"}>
                 <span className="flex relative gap-2 hover:text-orange-500">
                     <span className="absolute top-0 left-4 bg-red-500 text-xs px-1 py-0.1 text-white rounded-full">{totalQuantity}</span>
-                    <ShoppingCart />Cart</span> 
+                   <ShoppingCart />Cart</span>
+                </Link>    
                 <button onClick={handleMenuItem} className="flex bg-orange-400  py-2 px-2 rounded-xl hover:bg-orange-500 hover:shadow-lg transition-all duration-300 text-white cursor-pointer"> {menuItem ?<X />: <UserRound />}</button>
             </div>
             </div>{menuItem &&(
