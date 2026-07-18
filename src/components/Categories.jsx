@@ -40,7 +40,7 @@ export default function Categories({ searchTerm }) {
   return (
     <section className="mt-2 min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto">
-        <div className="sticky py-4 px-4 top-16 bg-white z-40 shadow-sm border-t border-gray-400">
+        <div className="sticky py-4 px-4 top-28 sm:top-16 bg-white z-40 shadow-sm border-t border-gray-400">
           <ul className="flex gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar">
             {categories.map((item, index) => (
               <li
