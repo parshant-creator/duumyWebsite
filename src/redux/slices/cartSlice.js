@@ -14,11 +14,11 @@ export const cartSlice = createSlice({
         (item) => item.id === action.payload.id,
       );
       if (existingProduct) {
-        existingProduct.quantity++;
+        existingProduct.quantity += action.payload.quantity || 1;
       } else {
         state.cartItems.push({
           ...action.payload,
-          quantity: 1,
+          quantity:action.payload.quantity || 1,
         });
       }
       state.totalQuantity++;

@@ -1,11 +1,28 @@
 import { Star, Heart, ShoppingCart} from "lucide-react";
 import { useState } from "react";
-export default function ProductCard({ product }) {
-  const [wishList, setWishList] = useState(false);
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 
-  const handleWishList = () => {
+export default function ProductCard({ product }) {
+
+  const [wishList, setWishList] = useState(false);
+  const {cartItems}= useSelector((state)=>state.cart)
+  console.log(cartItems)
+  const dispatch = useDispatch()
+  const handleWishList = (e) => {
+    e.preventDefault();
     setWishList((prev) => !prev);
   };
+  const handleAddToCart = (e)=>{
+    e.preventDefault()
+    e.stopPropagation();
+    dispatch(
+        addToCart({
+    ...product,
+   })
+    )
+
+  }
   return (
     <div
       className="bg-gray-100 p-3 md:p-4 relative min-w-[200px] max-w-[240px] md:min-w-0 rounded-lg flex flex-col h-full hover:shadow-lg
@@ -63,6 +80,7 @@ duration-300"
 </span>
       </div>
       <button
+      onClick={handleAddToCart}
         disabled={!product.inStock}
         className={`h-9 md:h-10 text-xs md:text-sm mt-auto w-full rounded-md flex items-center justify-center gap-2 text-white transition ${
           product.inStock

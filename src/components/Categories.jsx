@@ -42,9 +42,9 @@ export default function Categories({ searchTerm }) {
       <div className="max-w-7xl mx-auto">
         <div className="sticky py-4 px-4 top-28 sm:top-16 bg-white z-40 shadow-sm border-t border-gray-400">
           <ul className="flex gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar">
-            {categories.map((item, index) => (
+            {categories.map((item) => (
               <li
-                key={index}
+                key={item.id}
                 onClick={() => handleClick(item.name)}
                 className="flex flex-col items-center gap-2 min-w-[90px] cursor-pointer"
               >
