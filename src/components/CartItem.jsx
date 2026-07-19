@@ -1,10 +1,13 @@
 import {useDispatch, useSelector} from "react-redux"
 import { removeFromCart } from "../redux/slices/cartSlice"
+import Header from "./Header"
 export default function CartItem() {
   const dispatch = useDispatch()
   const {cartItems}= useSelector((state)=>state.cart)  
 
   return (
+    <div>
+      <Header />
     <div className="max-w-7xl mx-auto py-16 px-8 flex flex-wrap gap-6">
       <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-8">
       {cartItems.map((item)=>(
@@ -18,6 +21,6 @@ export default function CartItem() {
           <button onClick={()=>dispatch(removeFromCart({id:item.id}))} className="p-2 mt-2 rounded-2xl w-full bg-black text-white">Remove</button>
           </div>
       ))
-      }</div></div>
+      }</div></div></div>
   )
 }

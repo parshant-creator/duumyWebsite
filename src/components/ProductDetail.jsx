@@ -1,18 +1,17 @@
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
 import products from "../data/products";
 import NoProducts from "./NoProducts";
 import { ShoppingCart, Star } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import { addToCart } from "../redux/slices/cartSlice";
-import {useDispatch, useSelector} from "react-redux"
-import SearchPage from "./SearchPage";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "./Header";
 export default function ProductDetail() {
-  const dispatch = useDispatch()
- 
-const { cartItems } = useSelector(state => state.cart);
+  const dispatch = useDispatch();
 
-console.log(cartItems);
+  const { cartItems } = useSelector((state) => state.cart);
+
+  console.log(cartItems);
   const { id } = useParams();
   console.log(id);
   const product = products.find((item) => item.id === Number(id));
@@ -23,16 +22,17 @@ console.log(cartItems);
     (item) => item.category === product.category && item.id !== product.id,
   );
 
-  const handleAddToCart = ()=>{
-    dispatch(  addToCart({
-      ...product,
-    }))
- 
-  }
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        ...product,
+      }),
+    );
+  };
   return (
     <div className="min-h-screen">
+      <Header />
       <div className="max-w-7xl mx-auto px-4 py-4 md:px-8 md:py-8">
-        <SearchPage />
         <div className="flex w-full md:w-1/2 flex-col mb-6 md:flex-row  gap-10 items-center justify-center border rounded-md shadow-md border-gray-200 px-6 py-2 ">
           <div className="w-full md:w-96 h-52 md:h-72 bg-gray-200 rounded-lg overflow-hidden">
             <img
@@ -72,17 +72,17 @@ console.log(cartItems);
 
               {product.inStock ? "In Stock" : "Out of Stock"}
             </span>
-           
-            <button onClick={handleAddToCart} className="w-full bg-orange-500 text-white py-3 rounded-md flex items-center justify-center hover:bg-orange-600 transition">
-             <ShoppingCart size={20} className="mr-2" />  Add To Cart
-            </button>
 
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-orange-500 text-white py-3 rounded-md flex items-center justify-center hover:bg-orange-600 transition"
+            >
+              <ShoppingCart size={20} className="mr-2" /> Add To Cart
+            </button>
           </div>
-        </div>   <h2 className="text-2xl font-bold mb-4">
-  Related Products
-</h2>
+        </div>{" "}
+        <h2 className="text-2xl font-bold mb-4">Related Products</h2>
         <div className="flex overflow-x-auto whitespace-nowrap gap-4 hider-scrollbar">
-       
           {relatedProduct.map((product) => (
             <Link key={product.id} to={`/product/${product.id}`}>
               <ProductCard product={product} />
