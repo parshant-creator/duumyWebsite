@@ -5,7 +5,7 @@ import products from "../data/products";
 import ProductCard from "./ProductCard";
 import NoProducts from "./NoProducts";
 import SkeletonCard from "./SkeletonCard";
-export default function Categories({ searchTerm }) {
+export default function Categories() {
   const [activeTab, setActiveTab] = useState("For You");
   const [loading, setLoading] = useState(false);
   const [showIcons, setShowIcons] = useState(true);
@@ -20,9 +20,7 @@ export default function Categories({ searchTerm }) {
     activeTab === "For You"
       ? products
       : products.filter((product) => product.category === activeTab);
-  const filteredProducts = categoryProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+
   const lastScrollY = useRef(0);
   useEffect(() => {
     const scroll = () => {
@@ -80,8 +78,8 @@ export default function Categories({ searchTerm }) {
             className={` gap-4 p-4 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4
     lg:grid-cols-5   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
           >
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
+            {categoryProducts.length > 0 ? (
+              categoryProducts.map((product) => (
                 <Link key={product.id} to={`/product/${product.id}`}>
                 <ProductCard product={product} />
                 </Link>
