@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import products from "../data/products";
 import NoProducts from "./NoProducts";
-import { ShoppingCart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import { addToCart } from "../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,62 +32,97 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="max-w-7xl mx-auto px-4 py-4 md:px-8 md:py-8">
-        <div className="flex w-full md:w-1/2 flex-col mb-6 md:flex-row  gap-10 items-center justify-center border rounded-md shadow-md border-gray-200 px-6 py-2 ">
-          <div className="w-full md:w-96 h-52 md:h-72 bg-gray-200 rounded-lg overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        <p className="text-sm text-gray-500 mb-6">
+          Home / {product.category} /{" "}
+          <span className="text-black font-medium">{product.name}</span>
+        </p>
+
+        <div className="grid lg:grid-cols-2 gap-10 bg-white rounded-xl shadow p-6">
+          {/* Image */}
+          <div className="bg-gray-100 rounded-xl flex items-center justify-center p-8">
             <img
-              className="w-full h-full object-contain hover:scale-105 transition duration-300"
               src={product.image}
               alt={product.name}
+              className="h-80 object-contain hover:scale-105 transition duration-300"
             />
           </div>
-          <div className="flex w-full flex-col gap-1 sm:gap-2">
-            <div className="flex justify-between ">
-              <h4 className="md:text-2xl text-xl font-bold">{product.name}</h4>
-              <span className="flex items-center gap-1 text-xs md:text-sm">
-                <Star
-                  className="fill-yellow-400 text-yellow-400  md:w-4 md:h-4"
-                  size={14}
-                />
-                {product.rating}
-              </span>
+
+          {/* Details */}
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-bold">{product.name}</h1>
+
+            <div className="flex items-center gap-2 mt-3">
+              <Star className="fill-yellow-400 text-yellow-400" size={18} />
+
+              <span className="font-medium">{product.rating}</span>
             </div>
 
-            <h3 className="text-lg font-semibold mt-6">Description</h3>
-
-            <p className="text-gray-600 leading-7">{product.description}</p>
-            <h2 className="text-2xl font-bold text-orange-500">
+            <h2 className="text-4xl font-bold text-orange-500 mt-6">
               ₹{product.price}
             </h2>
+
             <span
-              className={`flex items-center gap-1 text-[11px] md:text-xs font-medium ${
+              className={`mt-3 font-medium ${
                 product.inStock ? "text-green-600" : "text-red-600"
               }`}
             >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  product.inStock ? "bg-green-600" : "bg-red-600"
-                }`}
-              ></span>
-
               {product.inStock ? "In Stock" : "Out of Stock"}
             </span>
 
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-orange-500 text-white py-3 rounded-md flex items-center justify-center hover:bg-orange-600 transition"
-            >
-              <ShoppingCart size={20} className="mr-2" /> Add To Cart
-            </button>
+            <p className="text-gray-600 leading-7 mt-6">
+              {product.description}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
+              >
+                Add To Cart
+              </button>
+
+              <button className="flex-1 border border-orange-500 text-orange-500 py-3 rounded-lg hover:bg-orange-500 hover:text-white transition">
+                Buy Now
+              </button>
+            </div>
+
+            {/* Delivery */}
+            <div className="mt-8 border rounded-lg p-5">
+              <h3 className="font-semibold text-lg mb-3">
+                Delivery Information
+              </h3>
+
+              <ul className="space-y-2 text-gray-600">
+                <li>🚚 Free Delivery</li>
+
+                <li>🔄 7 Days Replacement</li>
+
+                <li>💳 Cash On Delivery Available</li>
+              </ul>
+            </div>
           </div>
-        </div>{" "}
-        <h2 className="text-2xl font-bold mb-4">Related Products</h2>
-        <div className="flex overflow-x-auto whitespace-nowrap gap-4 hider-scrollbar">
-          {relatedProduct.map((product) => (
-            <Link key={product.id} to={`/product/${product.id}`}>
-              <ProductCard product={product} />
-            </Link>
-          ))}
+        </div>
+
+        {/* Description */}
+        <div className="mt-10 bg-white shadow rounded-xl p-6">
+          <h2 className="text-2xl font-bold mb-4">Product Description</h2>
+
+          <p className="text-gray-600 leading-8">{product.description}</p>
+        </div>
+
+        {/* Related Products */}
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold mb-5">You May Also Like</h2>
+
+          <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-hide">
+            {relatedProduct.map((product) => (
+              <Link key={product.id} to={`/product/${product.id}`}>
+                <ProductCard product={product} />
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>
