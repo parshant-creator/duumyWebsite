@@ -12,7 +12,7 @@ export default function CartItem() {
       <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-8">
       {cartItems.map((item)=>(
         <div key={item.id} className="border border-gray-100 rounded-2xl shadow-2xl p-4 flex flex-col">
-          <div className="h-44 w-56 md:h-72 md:w-60 ">
+          <div className="h-44 min-w-44 max-w-56 md:h-72 md:w-60 ">
                       <img className="h-full w-full object-contain rounded-2xl" src={item.image} />
           </div>
           <h4 className="mb-2 text-start font-semibold text-gray-600">{item.name}</h4>

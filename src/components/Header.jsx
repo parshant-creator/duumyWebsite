@@ -1,19 +1,22 @@
 import { ShoppingCart, Search, UserRound, X } from "lucide-react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useNavigate,useSearchParams } from "react-router-dom";
 export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const [menuItem, setMenuItem] = useState(false);
 
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams()
   const { totalQuantity } = useSelector((state) => state.cart);
 
   const handleMenuItem = () => {
     setMenuItem(!menuItem);
   };
+useEffect(() => {
+  const keyword = searchParams.get("q") || "";
+  setSearchTerm(keyword);
+}, [searchParams]);
 
   const handleSearch = (e) => {
     if (e.key === "Enter" && searchTerm.trim()) {
