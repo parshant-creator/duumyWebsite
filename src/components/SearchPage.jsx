@@ -70,19 +70,106 @@ export default function SearchPage() {
   Filter
 </button>
 {showFilter && (
-<div className="fixed inset-0 bg-white z-50">
+  <div className="fixed inset-0 z-50 bg-white flex flex-col">
 
-Filter
+    {/* Header */}
+    <div className="flex items-center justify-between p-4 border-b">
+      <h2 className="text-xl font-bold">Filters</h2>
 
-Category
+      <button
+        onClick={() => setShowFilter(false)}
+        className="text-3xl font-light"
+      >
+        ×
+      </button>
+    </div>
 
-Price
+    {/* Body */}
+    <div className="flex-1 overflow-y-auto p-5">
 
-Rating
+      {/* Category */}
+      <div className="mb-8">
+        <h3 className="font-semibold text-lg mb-4">
+          Category
+        </h3>
 
-<button onClick={() => setShowFilter(false)}>Apply Filter</button>
+        {categories
+          .filter((item) => item.name !== "For You")
+          .map((item) => (
+            <label
+              key={item.name}
+              className="flex items-center gap-3 py-2"
+            >
+              <input
+                type="checkbox"
+                className="accent-orange-500 w-5 h-5"
+              />
 
-</div>
+              <span>{item.name}</span>
+            </label>
+          ))}
+      </div>
+
+      {/* Price */}
+      <div className="mb-8">
+        <h3 className="font-semibold text-lg mb-4">
+          Price
+        </h3>
+
+        <label className="flex gap-3 py-2">
+          <input type="radio" name="price" />
+          Under ₹500
+        </label>
+
+        <label className="flex gap-3 py-2">
+          <input type="radio" name="price" />
+          ₹500 - ₹1000
+        </label>
+
+        <label className="flex gap-3 py-2">
+          <input type="radio" name="price" />
+          Above ₹1000
+        </label>
+      </div>
+
+      {/* Rating */}
+      <div>
+        <h3 className="font-semibold text-lg mb-4">
+          Rating
+        </h3>
+
+        <label className="flex gap-3 py-2">
+          <input type="radio" name="rating" />
+          4★ & Above
+        </label>
+
+        <label className="flex gap-3 py-2">
+          <input type="radio" name="rating" />
+          3★ & Above
+        </label>
+      </div>
+
+    </div>
+
+    {/* Bottom Buttons */}
+    <div className="border-t p-4 flex gap-3">
+
+      <button
+        className="flex-1 border border-gray-300 py-3 rounded-lg"
+      >
+        Reset
+      </button>
+
+      <button
+        onClick={() => setShowFilter(false)}
+        className="flex-1 bg-orange-500 text-white py-3 rounded-lg"
+      >
+        Apply Filter
+      </button>
+
+    </div>
+
+  </div>
 )}
        <select
   value={sortBy}
