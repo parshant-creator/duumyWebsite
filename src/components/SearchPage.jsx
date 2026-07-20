@@ -9,6 +9,7 @@ import categories from "../data/categories";
 export default function SearchPage() {
   const [sortBy, setSortBy] = useState("default");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [showFilter,setShowFilter] = useState(false)
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const keyword = query.get("q") || "";
@@ -46,14 +47,14 @@ export default function SearchPage() {
 
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-lg sm:text-xl lg:text-2xl">
           Search Results for "{keyword}"
         </h2>
 
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="border rounded-lg px-4 py-2 mt-3 sm:mt-0"
+          className="hidden lg:block border rounded-lg px-4 py-2 mt-3 sm:mt-0"
         >
           <option value="default">Default</option>
           <option value="low-high">Price: Low → High</option>
@@ -61,12 +62,44 @@ export default function SearchPage() {
           <option value="rating">Rating</option>
         </select>
       </div>
+<div className="flex lg:hidden justify-between mb-4">
+    <button
+  onClick={() => setShowFilter(true)}
+  className="px-5 py-2 bg-orange-500 text-white rounded-lg"
+>
+  Filter
+</button>
+{showFilter && (
+<div className="fixed inset-0 bg-white z-50">
 
+Filter
+
+Category
+
+Price
+
+Rating
+
+<button onClick={() => setShowFilter(false)}>Apply Filter</button>
+
+</div>
+)}
+       <select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+  className="border rounded-lg px-3 py-2"
+>
+  <option value="default">Default</option>
+  <option value="low-high">Low → High</option>
+  <option value="high-low">High → Low</option>
+  <option value="rating">Rating</option>
+</select>
+</div>
       {/* Main Layout */}
       <div className="flex flex-col lg:flex-row gap-6">
 
         {/* Sidebar */}
-       <div className="w-full lg:w-64 border rounded-xl shadow-sm p-5 bg-white h-fit">
+       <div className="hidden lg:block w-64 border rounded-xl shadow-sm p-5 bg-white h-fit">
   <h3 className="text-xl font-semibold border-b pb-3">
     Filters
   </h3>
@@ -97,7 +130,7 @@ export default function SearchPage() {
         {/* Products */}
         <div className="flex-1">
 
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
 
             {sortedProducts.length > 0 ? (
               sortedProducts.map((product) => (
