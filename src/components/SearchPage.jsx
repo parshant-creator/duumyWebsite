@@ -70,7 +70,7 @@ export default function SearchPage() {
   Filter
 </button>
 {showFilter && (
-  <div className="fixed inset-0 z-50 bg-white flex flex-col">
+  <div className="fixed inset-0 z-[999] bg-white flex flex-col">
 
     {/* Header */}
     <div className="flex items-center justify-between p-4 border-b">
