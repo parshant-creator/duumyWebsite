@@ -1,29 +1,24 @@
 import { ShoppingCart, Search, UserRound, X } from "lucide-react";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate,useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Header() {
+  const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState("");
   const [menuItem, setMenuItem] = useState(false);
 
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams()
   const { totalQuantity } = useSelector((state) => state.cart);
 
   const handleMenuItem = () => {
     setMenuItem(!menuItem);
   };
-useEffect(() => {
-  const keyword = searchParams.get("q") || "";
-  setSearchTerm(keyword);
-}, [searchParams]);
 
-  const handleSearch = (e) => {
-    if (e.key === "Enter" && searchTerm.trim()) {
-      navigate(`/search?q=${searchTerm.trim()}`);
-    }
-  };
 
+const handleInput =(e)=>{
+  if(e.key === "Enter" && searchTerm.trim()){
+    navigate(`/search?q=${searchTerm}`)
+  }
+}
   return (
     <nav className="bg-gray-100 w-full shadow-md sticky top-0 z-50">
       <div className="flex h-16 max-w-7xl mx-auto px-4 items-center justify-between">
@@ -40,8 +35,8 @@ useEffect(() => {
           <input
             type="text"
             value={searchTerm}
+            onKeyDown={handleInput}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleSearch}
             placeholder="Search Products..."
             className="w-full outline-none px-3 bg-transparent"
           />
@@ -103,15 +98,13 @@ useEffect(() => {
       <div className="sm:hidden px-4 pb-3">
         <div className="flex items-center border border-gray-300 bg-white rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-orange-300">
           <Search className="text-gray-500" size={18} />
-
+<Link to={'/search'}>
           <input
             type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleSearch}
             placeholder="Search Products..."
             className="w-full outline-none px-3 bg-transparent"
           />
+          </Link>
         </div>
       </div>
     </nav>

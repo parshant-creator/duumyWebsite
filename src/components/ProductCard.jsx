@@ -6,7 +6,6 @@ export default function ProductCard({ product }) {
 
   const [wishList, setWishList] = useState(false);
   const {cartItems}= useSelector((state)=>state.cart)
-  console.log(cartItems)
   const handleWishList = (e) => {
     e.preventDefault();
     setWishList((prev) => !prev);
