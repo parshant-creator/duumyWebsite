@@ -10,7 +10,8 @@ import lipstickSet from "../assets/images/Lipstick Set.avif";
 import WoodenChai from "../assets/images/Wooden Chai.avif";
 import remoteControlCar from "../assets/images/RemoteControlCar.webp";
 import KidsSchoolBag from "../assets/images/Kids SchoolBag.avif";
-const products = [{
+const products = [
+  {
     id: 1,
     name: "iPhone 15",
     price: 79999,
@@ -19,6 +20,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 10,
+    brand: "Apple",
   },
   {
     id: 2,
@@ -29,6 +31,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 12,
+    brand: "Apple",
   },
   {
     id: 3,
@@ -39,6 +42,7 @@ const products = [{
     rating: 4.9,
     inStock: true,
     discount: 5,
+    brand: "Apple",
   },
   {
     id: 4,
@@ -49,6 +53,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 8,
+    brand: "Apple",
   },
   {
     id: 5,
@@ -59,6 +64,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 15,
+    brand: "Samsung",
   },
   {
     id: 6,
@@ -69,6 +75,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 10,
+    brand: "Samsung",
   },
   {
     id: 7,
@@ -79,6 +86,7 @@ const products = [{
     rating: 4.9,
     inStock: true,
     discount: 5,
+    brand: "Samsung",
   },
   {
     id: 8,
@@ -89,6 +97,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 10,
+    brand: "OnePlus",
   },
   {
     id: 9,
@@ -99,6 +108,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 8,
+    brand: "Google",
   },
   {
     id: 10,
@@ -109,6 +119,7 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 12,
+    brand: "Nothing",
   },
   {
     id: 11,
@@ -119,6 +130,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 18,
+    brand: "Xiaomi",
   },
   {
     id: 12,
@@ -129,6 +141,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 20,
+    brand: "Realme",
   },
   {
     id: 13,
@@ -139,6 +152,7 @@ const products = [{
     rating: 4.5,
     inStock: false,
     discount: 10,
+    brand: "Vivo",
   },
   {
     id: 14,
@@ -149,6 +163,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 7,
+    brand: "Oppo", // id 14
   },
   {
     id: 15,
@@ -159,6 +174,7 @@ const products = [{
     rating: 4.3,
     inStock: true,
     discount: 15,
+    brand: "Motorola",
   },
 
   {
@@ -170,6 +186,7 @@ const products = [{
     rating: 4.9,
     inStock: true,
     discount: 8,
+    brand: "Apple", // id 16
   },
   {
     id: 17,
@@ -180,6 +197,7 @@ const products = [{
     rating: 4.9,
     inStock: true,
     discount: 5,
+    brand: "Apple",
   },
   {
     id: 18,
@@ -190,6 +208,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 10,
+    brand: "Dell", // id 18
   },
   {
     id: 19,
@@ -200,6 +219,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 10,
+    brand: "HP", // id 19
   },
   {
     id: 20,
@@ -210,6 +230,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 12,
+    brand: "Lenovo", // id 20
   },
   {
     id: 21,
@@ -220,6 +241,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 7,
+    brand: "ASUS", // id 21
   },
   {
     id: 22,
@@ -230,6 +252,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 15,
+    brand: "Sony", // id 22
   },
   {
     id: 23,
@@ -240,6 +263,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 10,
+    brand: "Apple", // id 23
   },
   {
     id: 24,
@@ -250,6 +274,7 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 18,
+    brand: "JBL", // id 24
   },
   {
     id: 25,
@@ -260,8 +285,9 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 9,
+    brand: "Acer",
   },
-   {
+  {
     id: 26,
     name: "Nike Air Max",
     price: 6999,
@@ -270,6 +296,8 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 10,
+    brand: "Nike", // id 26
+    // id 35
   },
   {
     id: 27,
@@ -280,6 +308,8 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 15,
+    brand: "Nike",
+    // id 27
   },
   {
     id: 28,
@@ -290,6 +320,8 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 8,
+    brand: "Adidas",
+    // id 28
   },
   {
     id: 29,
@@ -300,6 +332,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 12,
+    brand: "Puma", // id 29
   },
   {
     id: 30,
@@ -310,6 +343,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 20,
+    brand: "Reebok", // id 30
   },
   {
     id: 31,
@@ -320,6 +354,7 @@ const products = [{
     rating: 4.3,
     inStock: true,
     discount: 18,
+    brand: "Campus", // id 31
   },
   {
     id: 32,
@@ -330,6 +365,7 @@ const products = [{
     rating: 4.6,
     inStock: false,
     discount: 10,
+    brand: "Woodland", // id 32
   },
   {
     id: 33,
@@ -340,6 +376,7 @@ const products = [{
     rating: 4.2,
     inStock: true,
     discount: 25,
+    brand: "Bata", // id 33
   },
   {
     id: 34,
@@ -350,6 +387,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 10,
+    brand: "Skechers", // id 34
   },
   {
     id: 35,
@@ -360,6 +398,7 @@ const products = [{
     rating: 4.7,
     inStock: true,
     discount: 5,
+    brand: "New Balance",
   },
 
   // =========================
@@ -375,6 +414,8 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 10,
+    brand: "H&M", // id 36
+    // id 45
   },
   {
     id: 37,
@@ -385,6 +426,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 20,
+    brand: "Levi's", // id 37
   },
   {
     id: 38,
@@ -395,6 +437,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 15,
+    brand: "Levi's", // id 38
   },
   {
     id: 39,
@@ -405,6 +448,7 @@ const products = [{
     rating: 4.3,
     inStock: true,
     discount: 10,
+    brand: "Peter England", // id 39
   },
   {
     id: 40,
@@ -415,6 +459,7 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 12,
+    brand: "Wrangler", // id 40
   },
   {
     id: 41,
@@ -425,6 +470,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 18,
+    brand: "Roadster", // id 41
   },
   {
     id: 42,
@@ -435,6 +481,7 @@ const products = [{
     rating: 4.5,
     inStock: false,
     discount: 15,
+    brand: "Allen Solly", // id 42
   },
   {
     id: 43,
@@ -445,6 +492,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 8,
+    brand: "Nike", // id 43
   },
   {
     id: 44,
@@ -455,6 +503,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 10,
+    brand: "Zara", // id 44
   },
   {
     id: 45,
@@ -465,6 +514,7 @@ const products = [{
     rating: 4.3,
     inStock: true,
     discount: 20,
+    brand: "U.S. Polo",
   },
 
   // =========================
@@ -480,6 +530,8 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 10,
+    brand: "Biba", // id 46
+    // id 50
   },
   {
     id: 47,
@@ -490,6 +542,7 @@ const products = [{
     rating: 4.6,
     inStock: true,
     discount: 12,
+    brand: "Zara", // id 47
   },
   {
     id: 48,
@@ -500,6 +553,7 @@ const products = [{
     rating: 4.8,
     inStock: true,
     discount: 15,
+    brand: "Libas", // id 48
   },
   {
     id: 49,
@@ -510,6 +564,7 @@ const products = [{
     rating: 4.4,
     inStock: true,
     discount: 20,
+    brand: "H&M", // id 49
   },
   {
     id: 50,
@@ -520,6 +575,7 @@ const products = [{
     rating: 4.5,
     inStock: true,
     discount: 10,
+    brand: "W",
   },
 ];
 
