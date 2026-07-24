@@ -5,11 +5,14 @@ import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import NoProducts from "./NoProducts";
+import { ArrowDownWideNarrow, SlidersHorizontal } from "lucide-react";
 // import NoProducts from "./NoProducts";
 export default function SearchResult() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [sortBar, setSortBar] = useState(false)
+  const [sortBy, setSortBy] = useState("");
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("q");
   const filterProduct = products.filter((item) =>
@@ -52,15 +55,58 @@ export default function SearchResult() {
       ? priceProducts
       : priceProducts.filter((product) => product.brand === selectedBrand);
   const showClearButton = selectedCategory || selectedBrand || selectedPrice;
+  const sortedProducts  = [...brandProduct];
+  if(sortBy === "lowToHigh"){
+    sortedProducts.sort((a,b)=>a.price-b.price)
+  }
+  if (sortBy === "highToLow") {
+  sortedProducts.sort((a, b) => b.price - a.price);
+}
   const handleClear = () => {
-    (setSelectedCategory(""), setSelectedBrand(""), setSelectedPrice(""));
+    (setSelectedCategory(""), setSelectedBrand(""), setSelectedPrice(""), setSortBy(""));
   };
+
+  const handleSortBar = ()=>{
+    setSortBar((sortBar)=>!sortBar)
+  }
+
   return (
     <>
       <Header />
+      <div className="lg:hidden w-full sticky top-28 z-50 border-y bg-white border-gray-200" >
+            <div className="flex justify-between items-center p-4">
+              <button onClick={handleSortBar} className="flex gap-1 items-center" ><ArrowDownWideNarrow /><span>Sort</span></button>
+              <button className="flex gap-1 items-center" ><SlidersHorizontal /><span>Filter</span></button>
+            </div>
+          </div>
+{sortBar && (  <div className="fixed inset-0 bg-black/40 z-40">
+<div className="flex justify-center py-3">
+  <div className="w-12 h-1.5 rounded-full bg-gray-300"></div>
+</div>
+   <div className={ ` bottom-0 fixed w-full bg-white z-50 p-4 border-y transition-transform duration-300 ${sortBar?"translate-y-0":"translate-y-full"}`}>
+            <h4 className="uppercase mb-2 font-semibold">Sort By</h4>
+            <div className="flex flex-col gap-4 mt-2 text-gray-800 font-semibold">
+              <label className="flex gap-2"><span>Price - Low To High</span> 
+              <input type="radio" name="sort" checked={sortBy === "lowToHigh"}
+  onChange={() => {
+    setSortBy("lowToHigh");
+    setSortBar(false);
+  }} />
+            </label>
+            <label className="flex gap-2">
+            <span>Price - High To Low</span>
+            <input type="radio" name="sort" checked={sortBy === "highToLow"}
+onChange={() => {
+  setSortBy("highToLow");
+    setSortBar(false);
+  }} /></label>
+            </div></div>
+          </div>)}
+       
+
       <div className="p-4 min-h-screen">
         <div className="flex justify-between">
-          <div className="min-w-[360px] h-fit sticky top-20 shadow-lg p-5">
+          <div className="hidden lg:block min-w-[360px] h-fit sticky top-20 shadow-lg p-5">
             <div className="flex justify-between items-center gap-6 py-4">
               <h4 className="py-2 text-xl font-semibold">Filters</h4>
               {showClearButton && (
@@ -147,13 +193,14 @@ export default function SearchResult() {
               </label>
             </div>
           </div>
+          
+
           <div className="flex-1 px-8">
             <div
-              className="gap-6 p-4 grid grid-cols-1  md:grid-cols-2
-    lg:grid-cols-3 xl:grid-cols-4  "
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-4"
             >
-              {brandProduct.length > 0 ? (
-                brandProduct.map((product) => (
+              {sortedProducts.length > 0 ? (
+                sortedProducts.map((product) => (
                   <Link key={product.id} to={`/product/${product.id}`}>
                     <ProductCard product={product} />
                   </Link>

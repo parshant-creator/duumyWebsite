@@ -98,7 +98,7 @@ const handleInput =(e)=>{
       <div className="sm:hidden px-4 pb-3">
         <div className="flex items-center border border-gray-300 bg-white rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-orange-300">
           <Search className="text-gray-500" size={18} />
-<div onClick={()=>navigate("/search")}>
+<div onFocus={()=>navigate("/search")}>
           <input
             type="text"
             placeholder="Search Products..."

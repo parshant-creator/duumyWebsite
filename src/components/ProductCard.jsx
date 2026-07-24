@@ -1,11 +1,9 @@
 import {  Heart} from "lucide-react";
 import { useState } from "react";
-import {  useSelector } from "react-redux";
 
 export default function ProductCard({ product }) {
 
   const [wishList, setWishList] = useState(false);
-  const {cartItems}= useSelector((state)=>state.cart)
   const handleWishList = (e) => {
     e.preventDefault();
     setWishList((prev) => !prev);
