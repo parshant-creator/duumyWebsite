@@ -13,6 +13,7 @@ export default function SearchResult() {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [sortBar, setSortBar] = useState(false);
   const [sortBy, setSortBy] = useState("");
+  const [filterDrawer, setFilterDrawer] = useState(false);
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("q");
   const filterProduct = products.filter((item) =>
@@ -47,9 +48,7 @@ export default function SearchResult() {
           return true;
         });
   const allBrands = priceProducts.map((product) => product.brand);
-  console.log(allBrands);
   const uniqueBrand = [...new Set(allBrands)];
-  console.log(uniqueBrand);
   const brandProduct =
     selectedBrand === ""
       ? priceProducts
@@ -70,9 +69,13 @@ export default function SearchResult() {
   };
 
   const handleSortBar = () => {
+    setFilterDrawer(false)
     setSortBar((sortBar) => !sortBar);
   };
-
+  const handleFilterDrawer = () => {
+    setSortBar(false)
+    setFilterDrawer((filterDrawer) => !filterDrawer);
+  };
   return (
     <>
       <Header />
@@ -82,7 +85,10 @@ export default function SearchResult() {
             <ArrowDownWideNarrow />
             <span>Sort</span>
           </button>
-          <button className="flex gap-1 items-center">
+          <button
+            onClick={handleFilterDrawer}
+            className="flex gap-1 items-center"
+          >
             <SlidersHorizontal />
             <span>Filter</span>
           </button>
@@ -126,6 +132,37 @@ export default function SearchResult() {
                   }}
                 />
               </label>
+            </div>
+          </div>
+        </div>
+      )}
+      {filterDrawer && (
+        <div
+          onClick={() => setFilterDrawer(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={` bottom-0 fixed w-full bg-white z-50 p-4 border-y transition-transform duration-300 ${filterDrawer ? "translate-y-0" : "translate-y-full"}`}
+          >
+            <h4 className="uppercase mb-2 font-semibold">Filter</h4>
+            <div className="flex flex-col gap-4 mt-2 text-gray-800 font-semibold">
+              <p>Selected : {selectedBrand}</p>
+              {uniqueBrand.map((brand) => (
+                <label key={brand} className="flex gap-2">
+                  <span>{brand}</span>
+                  <input
+                  key={selectedBrand}
+                    onChange={(e) => {
+                      setSelectedBrand(e.target.value); setFilterDrawer(false);
+                    }}
+                    value={brand}
+                    type="radio"
+                    name="brand"
+                    defaultChecked={selectedBrand === brand}
+                  />
+                </label>
+              ))}
             </div>
           </div>
         </div>
