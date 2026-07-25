@@ -147,7 +147,6 @@ export default function SearchResult() {
           >
             <h4 className="uppercase mb-2 font-semibold">Filter</h4>
             <div className="flex flex-col gap-4 mt-2 text-gray-800 font-semibold">
-              <p>Selected : {selectedBrand}</p>
               {uniqueBrand.map((brand) => (
                 <label key={brand} className="flex gap-2">
                   <span>{brand}</span>
@@ -159,7 +158,7 @@ export default function SearchResult() {
                     value={brand}
                     type="radio"
                     name="brand"
-                    defaultChecked={selectedBrand === brand}
+                    Checked={selectedBrand === brand}
                   />
                 </label>
               ))}
