@@ -13,7 +13,7 @@ export default function ProductDescription() {
   return <NoProducts />;
 }
 const relatedProduct = products.filter((item)=>(
-  item.category === product.category && item.id !== product.category
+  item.category === product.category && item.id !== product.id
 ))
 console.log(relatedProduct)
   return (
@@ -27,13 +27,13 @@ console.log(relatedProduct)
         </p>
       </div>
       <div className="max-w-7xl  mx-auto lg:h-187.5 grid lg:grid-cols-2 p-4 lg:p-8">
-        <div className="h-full p-4 lg:p-8">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="max-h-full max-w-full object-contain "
-          />
-        </div>
+        <div className="p-4 lg:p-8">
+  <img
+    src={product.image}
+    alt={product.name}
+    className="w-full h-64 lg:h-full object-contain"
+  />
+</div>
         <div className="flex flex-col min-h-0 p-4 lg:p-8">
           <div className=" flex-1 lg:overflow-y-auto min-h-0 hider-scrollbar ">
             <h4 className="text-sm uppercase tracking-wide text-gray-500 font-semibold">
@@ -88,7 +88,7 @@ console.log(relatedProduct)
               </p>
             </div>
           </div>
-          <div className="sticky bottom-0 pt-5 flex gap-4">
+          <div className="lg:sticky lg:bottom-0 pt-5 flex justify-between  gap-3">
             <button className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
               Add to Cart
             </button>
