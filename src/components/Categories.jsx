@@ -39,7 +39,7 @@ export default function Categories() {
     <section className="mt-2 min-h-screen bg-gray-50 w-full">
       {/* <div className="max-w-7xl mx-auto"> */}
         <div className="sticky py-4 px-4 top-28 sm:top-16 bg-white z-40 shadow-sm border-t border-gray-400">
-          <ul className="flex gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar justify-center">
+          <ul className="flex gap-6 overflow-x-auto whitespace-nowrap hider-scrollbar justify-evenly">
             {categories.map((item) => (
               <li
                 key={item.id}
@@ -67,7 +67,7 @@ export default function Categories() {
             ))}
           </ul>
         </div>       
-<div className="w-full px-4 py-6 bg-blue-50">
+<div className=" px-4 py-6 bg-blue-50">
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
             {Array.from({ length: 6 }).map((_, index) => (
@@ -76,8 +76,8 @@ export default function Categories() {
           </div>
         ) : (
           <div
-            className={` gap-4 p-4 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4
-    lg:grid-cols-6   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+            className={` gap-3 md:gap-4 p-4 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4
+    lg:grid-cols-6    transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
           >
     {categoryProducts.length > 0 ? (
               categoryProducts.map((product) => (

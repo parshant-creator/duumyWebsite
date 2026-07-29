@@ -11,11 +11,16 @@ export default function ProductCard({ product }) {
  
   return (
     <div
-      className="bg-white p-3 md:p-4 relative min-w-[200px] max-w-[240px] md:min-w-0 rounded-lg flex flex-col h-full hover:shadow-lg
-hover:-translate-y-1
-transition-all
-duration-300"
-    >
+     className="relative bg-white rounded-lg p-3 md:p-4
+             w-full
+             min-w-0
+             max-w-none
+             flex flex-col
+             h-full
+             hover:shadow-lg
+             hover:-translate-y-1
+             transition-all duration-300"
+>
       <button
         onClick={handleWishList}
         className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2 "
