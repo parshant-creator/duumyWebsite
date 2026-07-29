@@ -11,14 +11,14 @@ export default function ProductCard({ product }) {
  
   return (
     <div
-      className="bg-gray-100 p-3 md:p-4 relative min-w-[200px] max-w-[240px] md:min-w-0 rounded-lg flex flex-col h-full hover:shadow-lg
+      className="bg-white p-3 md:p-4 relative min-w-[200px] max-w-[240px] md:min-w-0 rounded-lg flex flex-col h-full hover:shadow-lg
 hover:-translate-y-1
 transition-all
 duration-300"
     >
       <button
         onClick={handleWishList}
-        className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2 z-50"
+        className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2 "
       >
         <Heart
           size={18}

@@ -67,7 +67,7 @@ export default function Categories() {
             ))}
           </ul>
         </div>       
-<div className="flex justify-center">
+<div className="w-full px-4 py-6 bg-blue-50">
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
             {Array.from({ length: 6 }).map((_, index) => (
@@ -77,7 +77,7 @@ export default function Categories() {
         ) : (
           <div
             className={` gap-4 p-4 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4
-    lg:grid-cols-5   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+    lg:grid-cols-6   transition-all duration-300 ${loading ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
           >
     {categoryProducts.length > 0 ? (
               categoryProducts.map((product) => (
