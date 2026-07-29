@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../redux/slices/cartSlice";
+import { removeFromCart,decrementCartQuantity, addToCart } from "../redux/slices/cartSlice";
 import Header from "./Header";
 
 export default function CartItem() {
@@ -51,9 +51,25 @@ const totalPrice = cartItems.reduce(
                         {item.name}
                       </h3>
 
-                      <p className="text-gray-500 mt-2">
-                        Quantity : {item.quantity}
-                      </p>
+                     <div className="flex items-center gap-3 mt-3">
+  <button
+    onClick={() => dispatch(decrementCartQuantity(item))}
+    className="w-8 h-8 border rounded-lg hover:bg-gray-100"
+  >
+    -
+  </button>
+
+  <span className="font-semibold text-lg">
+    {item.quantity}
+  </span>
+
+  <button
+    onClick={() => dispatch(addToCart(item))}
+    className="w-8 h-8 border rounded-lg hover:bg-gray-100"
+  >
+    +
+  </button>
+</div>
 
                       <p className="text-2xl font-bold text-orange-500 mt-3">
                         ₹{item.price * item.quantity}

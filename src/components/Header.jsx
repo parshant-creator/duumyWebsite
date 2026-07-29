@@ -24,7 +24,7 @@ const handleInput =(e)=>{
       <div className="flex h-16 max-w-7xl mx-auto px-4 items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="font-bold text-2xl">
+        <Link to="/" className="font-bold text-2xl bg-orange-600 px-6 py-2 text-white rounded-2xl">
           🛍 ShopKart
         </Link>
 

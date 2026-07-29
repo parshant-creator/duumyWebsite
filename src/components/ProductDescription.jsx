@@ -5,16 +5,29 @@ import { MapPin, Star, Van } from "lucide-react";
 import { useState } from "react";
 import NoProducts from "../components/NoProducts";
 import ProductCard from "./ProductCard";
+import { useDispatch, useSelector} from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 export default function ProductDescription() {
+  const dispatch = useDispatch()
+  const {cartItems} = useSelector((state)=>state.cart)
+  console.log(cartItems)
+
   const [showMore, setShowMore] = useState(false);
   const { id } = useParams();
   const product = products.find((item) => item.id === Number(id));
   if (!product) {
     return <NoProducts />;
   }
+    const isInCart = cartItems.some(
+    (item)=>item.id === product.id
+  )
   const relatedProduct = products.filter(
     (item) => item.category === product.category && item.id !== product.id,
   );
+  const handleAddToCart = ()=>{
+    console.log("ok")
+    dispatch(addToCart(product))
+  }
   return (
     <div className="bg-gray-100 min-h-screen">
       <Header />
@@ -89,9 +102,20 @@ export default function ProductDescription() {
             </div>
           </div>
           <div className="lg:sticky lg:bottom-0 pt-5 flex justify-between  gap-3">
-            <button className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
+            {
+  isInCart ? (
+   <Link to="/cart" className="flex-1">
+  <button className="w-full rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
+    Go To Cart
+  </button>
+</Link>
+  ) : (
+            <button
+            onClick={handleAddToCart}
+             className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
               Add to Cart
             </button>
+  )}
             <button className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold bg-orange-500 text-white hover:bg-orange-600 cursor-pointer">
               Buy Now • ₹{product.price}
             </button>
