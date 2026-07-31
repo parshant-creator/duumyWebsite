@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="font-bold text-2xl">🛍 ShopKart</div>
         <div className="flex flex-wrap gap-6 text-gray-300">
           <span className="cursor-pointer hover:text-white">About </span>
-          <span className="cursor-pointer hover:text-white">About </span>
+          <span className="cursor-pointer hover:text-white">Products </span>
           <span className="cursor-pointer hover:text-white">Support </span>
           <span className="cursor-pointer hover:text-white">Contact</span>
         </div>

@@ -39,11 +39,12 @@ export default function ProductDescription() {
       </div>
       <div className="max-w-7xl  mx-auto lg:h-187.5 grid lg:grid-cols-2 p-4 lg:p-8">
         <div className="p-4 lg:p-8">
+           <div className="w-full lg:h-[500px] ">
           <img
             src={product.image}
             alt={product.name}
             className="w-full h-64 lg:h-full object-contain"
-          />
+          /></div>
         </div>
         <div className="flex flex-col min-h-0 p-4 lg:p-8">
           <div className=" flex-1 lg:overflow-y-auto min-h-0 hider-scrollbar ">
