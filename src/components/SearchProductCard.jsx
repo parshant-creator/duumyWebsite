@@ -25,7 +25,7 @@ export default function SearchProductCard({ product }) {
           </span>
         )}
 
-        <div className="relative shrink-0 w-28 h-28 md:w-full md:h-48 flex items-center justify-center">
+        <div className="relative shrink-0 w-38 h-28 md:w-full md:h-48 flex items-center justify-evenly overflow-hidden z-10">
           <img
             src={product.image}
             alt={product.name}

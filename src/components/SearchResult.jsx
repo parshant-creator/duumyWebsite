@@ -168,9 +168,9 @@ export default function SearchResult() {
         </div>
       )}
 
-      <div className="p-4 min-h-screen">
+      <div className="md:p-4 min-h-screen">
         <div className="flex justify-between">
-          <div className="hidden lg:block min-w-[360px] h-fit sticky top-20 shadow-lg p-5">
+          <div className="hidden md:block min-w-[360px] h-fit sticky top-20 shadow-lg p-5">
             <div className="flex justify-between items-center gap-6 py-4">
               <h4 className="py-2 text-xl font-semibold">Filters</h4>
               {showClearButton && (
@@ -258,7 +258,7 @@ export default function SearchResult() {
           </div>
 
           <div className="flex-1 md:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-5 sm:p-4">
               {sortedProducts.length > 0 ? (
                 sortedProducts.map((product) => (
                   <Link key={product.id} to={`/product/${product.id}`}>
