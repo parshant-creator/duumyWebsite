@@ -80,7 +80,7 @@ export default function SearchResult() {
   return (
     <>
       <Header />
-      <div className="md:hidden w-full sticky top-28 z-50 border-y bg-white border-gray-200">
+      <div className="md:hidden w-full sticky top-28 z-30 border-y bg-white border-gray-200">
         <div className="flex justify-between items-center p-4">
           <button onClick={handleSortBar} className="flex gap-1 items-center">
             <ArrowDownWideNarrow />
