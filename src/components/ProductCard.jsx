@@ -23,21 +23,21 @@ export default function ProductCard({ product }) {
 >
       <button
         onClick={handleWishList}
-        className="cursor-pointer p-1.5 md:p-2 rounded-full bg-white shadow-md absolute top-2 right-2 "
+        className="cursor-pointer p-1.5 md:p-2 rounded-full z-40 bg-white shadow-md absolute top-2 right-2 "
       >
         <Heart
           size={18}
-          className={`md:w-5 md:h-5 transition-all duration-200 hover:scale-110 text-red-500 ${wishList ? "fill-red-500" : "fill-red-50"}`}
+          className={`md:w-5 md:h-5 transition-all duration-200 hover:scale-110  text-red-500 ${wishList ? "fill-red-500" : "fill-red-50"}`}
         />
       </button>
 
-      <div className="relative h-36 sm:h-40 md:h-48 flex justify-center items-center overflow-hidden">
+      <div className="relative h-36 sm:h-40 md:h-48 flex justify-center items-center overflow-hidden z-30">
         {product.discount > 0 &&(
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-[10px] md:text-xs px-2 py-1 rounded">{product.discount}%OFF</span>
+          <span className="absolute z-20 top-2 left-2 bg-red-500 text-white text-[10px] md:text-xs px-2 py-1 rounded">{product.discount}%OFF</span>
         )}
         <img
           src={product.image}
-          className="h-full w-full object-contain"
+          className="h-full w-full object-contain "
           alt="img"
         />
       </div>

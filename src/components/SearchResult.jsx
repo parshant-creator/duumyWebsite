@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import NoProducts from "./NoProducts";
 import { ArrowDownWideNarrow, SlidersHorizontal } from "lucide-react";
+import SearchProductCard from "./SearchProductCard";
 // import NoProducts from "./NoProducts";
 export default function SearchResult() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -79,7 +80,7 @@ export default function SearchResult() {
   return (
     <>
       <Header />
-      <div className="lg:hidden w-full sticky top-28 z-50 border-y bg-white border-gray-200">
+      <div className="md:hidden w-full sticky top-28 z-50 border-y bg-white border-gray-200">
         <div className="flex justify-between items-center p-4">
           <button onClick={handleSortBar} className="flex gap-1 items-center">
             <ArrowDownWideNarrow />
@@ -158,7 +159,7 @@ export default function SearchResult() {
                     value={brand}
                     type="radio"
                     name="brand"
-                    Checked={selectedBrand === brand}
+                    checked={selectedBrand === brand}
                   />
                 </label>
               ))}
@@ -256,12 +257,12 @@ export default function SearchResult() {
             </div>
           </div>
 
-          <div className="flex-1 px-8">
+          <div className="flex-1 md:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-4">
               {sortedProducts.length > 0 ? (
                 sortedProducts.map((product) => (
                   <Link key={product.id} to={`/product/${product.id}`}>
-                    <ProductCard product={product} />
+                    <SearchProductCard product={product} />
                   </Link>
                 ))
               ) : (

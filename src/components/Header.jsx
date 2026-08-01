@@ -16,7 +16,7 @@ export default function Header() {
 
 const handleInput =(e)=>{
   if(e.key === "Enter" && searchTerm.trim()){
-    navigate(`/search?q=${searchTerm}`)
+    navigate(`/search?q=${searchTerm.trim()}`);
   }
 }
   return (
@@ -24,12 +24,12 @@ const handleInput =(e)=>{
       <div className="flex h-16 max-w-7xl mx-auto px-4 items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="font-bold text-2xl bg-orange-600 px-4 md:px-6 py-2 text-white rounded-2xl">
+        <Link to="/" className="font-bold text-xl md:text-2xl bg-orange-600 px-3 md:px-6 py-2 text-white rounded-2xl">
           🛍 ShopKart
         </Link>
 
         {/* Desktop Search */}
-        <div className="hidden sm:flex w-96 items-center px-3 py-2 border border-gray-300 rounded-full focus-within:ring-2 focus-within:ring-orange-400 bg-white">
+        <div className="hidden md:flex w-96 items-center px-3 py-2 border border-gray-300 rounded-full focus-within:ring-2 focus-within:ring-orange-400 bg-white">
           <Search className="text-gray-500" size={18} />
 
           <input
@@ -43,7 +43,7 @@ const handleInput =(e)=>{
         </div>
 
         {/* Right Side */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 md:gap-5">
 
           {/* Cart */}
           <Link
@@ -95,11 +95,12 @@ const handleInput =(e)=>{
       )}
 
       {/* Mobile Search */}
-      <div className="sm:hidden px-4 pb-3">
+      <div className="md:hidden px-4 pb-3">
         <div className="flex items-center border border-gray-300 bg-white rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-orange-300">
           <Search className="text-gray-500" size={18} />
-<div onFocus={()=>navigate("/search")}>
+<div >
           <input
+          onFocus={()=>navigate("/search")}
             type="text"
             placeholder="Search Products..."
             className="w-full outline-none px-3 bg-transparent"
