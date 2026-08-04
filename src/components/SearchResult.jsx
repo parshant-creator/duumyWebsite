@@ -1,7 +1,5 @@
-import Header from "./Header";
 import products from "../data/products";
 import { useSearchParams } from "react-router-dom";
-import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import NoProducts from "./NoProducts";
@@ -79,7 +77,6 @@ export default function SearchResult() {
   };
   return (
     <>
-      <Header />
       <div className="md:hidden w-full sticky top-28 z-30 border-y bg-white border-gray-200">
         <div className="flex justify-between items-center p-4">
           <button onClick={handleSortBar} className="flex gap-1 items-center">

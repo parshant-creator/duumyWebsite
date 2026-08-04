@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 export default function Header() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [menuItem, setMenuItem] = useState(false);
 
@@ -13,18 +13,19 @@ export default function Header() {
     setMenuItem(!menuItem);
   };
 
-
-const handleInput =(e)=>{
-  if(e.key === "Enter" && searchTerm.trim()){
-    navigate(`/search?q=${searchTerm.trim()}`);
-  }
-}
+  const handleInput = (e) => {
+    if (e.key === "Enter" && searchTerm.trim()) {
+      navigate(`/search?q=${searchTerm.trim()}`);
+    }
+  };
   return (
     <nav className="bg-gray-100 w-full shadow-md sticky top-0 z-50">
       <div className="flex h-16 max-w-7xl mx-auto px-4 items-center justify-between">
-
         {/* Logo */}
-        <Link to="/" className="font-bold text-xl md:text-2xl bg-orange-600 px-3 md:px-6 py-2 text-white rounded-2xl">
+        <Link
+          to="/"
+          className="font-bold text-xl md:text-2xl bg-orange-400 px-3 md:px-6 py-2 text-white rounded-2xl"
+        >
           🛍 ShopKart
         </Link>
 
@@ -44,7 +45,16 @@ const handleInput =(e)=>{
 
         {/* Right Side */}
         <div className="flex items-center gap-3 md:gap-5">
-
+          {/* User */}
+          <Link to="/register" className="bg-orange-400 text-white px-5 py-2 rounded-lg font-medium">
+  Login
+</Link>
+          <button
+            onClick={handleMenuItem}
+            className="bg-orange-400 p-2 rounded-xl text-white hover:bg-orange-500 transition"
+          >
+            {menuItem ? <X /> : <UserRound />}
+          </button>{" "}
           {/* Cart */}
           <Link
             to="/cart"
@@ -60,14 +70,6 @@ const handleInput =(e)=>{
 
             <span className="hidden sm:block">Cart</span>
           </Link>
-
-          {/* User */}
-          <button
-            onClick={handleMenuItem}
-            className="bg-orange-400 p-2 rounded-xl text-white hover:bg-orange-500 transition"
-          >
-            {menuItem ? <X /> : <UserRound />}
-          </button>
         </div>
       </div>
 
@@ -98,13 +100,13 @@ const handleInput =(e)=>{
       <div className="md:hidden px-4 pb-3">
         <div className="flex items-center border border-gray-300 bg-white rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-orange-300">
           <Search className="text-gray-500" size={18} />
-<div >
-          <input
-          onFocus={()=>navigate("/search")}
-            type="text"
-            placeholder="Search Products..."
-            className="w-full outline-none px-3 bg-transparent"
-          />
+          <div>
+            <input
+              onFocus={() => navigate("/search")}
+              type="text"
+              placeholder="Search Products..."
+              className="w-full outline-none px-3 bg-transparent"
+            />
           </div>
         </div>
       </div>

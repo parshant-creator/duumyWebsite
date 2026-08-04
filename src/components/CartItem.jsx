@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart,decrementCartQuantity, addToCart } from "../redux/slices/cartSlice";
-import Header from "./Header";
 
 export default function CartItem() {
   const dispatch = useDispatch();
@@ -12,8 +11,6 @@ const totalPrice = cartItems.reduce(
 );
   return (
     <>
-      <Header />
-
       <div className="max-w-7xl mx-auto px-4 py-8">
 
         <h2 className="text-3xl font-bold mb-8">
