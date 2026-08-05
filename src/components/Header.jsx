@@ -1,9 +1,11 @@
 import { ShoppingCart, Search, UserRound, X } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const hideLogInButton = location.pathname ==="/register"
   const [searchTerm, setSearchTerm] = useState("");
   const [menuItem, setMenuItem] = useState(false);
 
@@ -46,9 +48,12 @@ export default function Header() {
         {/* Right Side */}
         <div className="flex items-center gap-3 md:gap-5">
           {/* User */}
-          <Link to="/register" className="bg-orange-400 text-white px-5 py-2 rounded-lg font-medium">
-  Login
-</Link>
+          {!hideLogInButton &&(
+            <Link to="/register" className="bg-orange-400 text-white px-5 py-2 rounded-lg font-medium">
+            Login
+          </Link>
+          )}
+          
           <button
             onClick={handleMenuItem}
             className="bg-orange-400 p-2 rounded-xl text-white hover:bg-orange-500 transition"

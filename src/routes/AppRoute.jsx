@@ -30,6 +30,7 @@ import ProductDescription from '../components/ProductDescription'
 import ScrollToTop from '../components/ScrollToTop'
 import Register from '../pages/Register'
 import MainLayout from '../components/layouts/MainLayout'
+import Login from '../pages/Login'
 export default function AppRoute() {
   return (
     <BrowserRouter>
@@ -37,6 +38,7 @@ export default function AppRoute() {
    <Routes>
   <Route element={<MainLayout />}>
     <Route path="/register" element={<Register />} />
+     <Route path="/login" element={<Login />} />
     <Route path="/" element={<Home />} />
     <Route path="/product/:id" element={<ProductDescription />} />
     <Route path="/search" element={<Search />} />
