@@ -1,15 +1,13 @@
-import Footer from "./components/Footer"
-import AppRoute from "./routes/AppRoute"
-import {Toaster} from 'react-hot-toast'
+import AppRoute from "./routes/AppRoute";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <div>
-       <Toaster position="top-center" />
-      <AppRoute/>
-      <Footer />
+      <Toaster position="top-center" />
+      <AppRoute />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

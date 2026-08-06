@@ -169,7 +169,7 @@ export default function Register() {
           >
             {step === 1 ? "continue" : "create Account"}
           </button>
-          <Link to="/login" className="w-full text-blue-600 shadow py-3 font-medium">
+          <Link to="/login" className="w-full text-center text-blue-600 shadow py-3 font-medium">
             Existing User?Log in
           </Link>
         </div>

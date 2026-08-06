@@ -51,7 +51,7 @@ export default function Header() {
         <div className="flex items-center gap-3 md:gap-5">
           {!token? <>
           {!hideLogInButton &&(
-            <Link to="/register" className=" text-black  font-medium">
+            <Link to="/login" className=" text-black  font-medium">
             Login
           </Link>
           )}</>:<>
