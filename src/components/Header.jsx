@@ -1,8 +1,10 @@
-import { ShoppingCart, Search, UserRound, X } from "lucide-react";
+import { ShoppingCart, Search, UserRound, X, UserCircle2, LogOut, Settings, Heart, Package } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
+  const token = localStorage.getItem("token")
+  console.log(token)
   const navigate = useNavigate();
   const location = useLocation();
   const hideLogInButton = location.pathname ==="/register"
@@ -26,9 +28,9 @@ export default function Header() {
         {/* Logo */}
         <Link
           to="/"
-          className="font-bold text-xl md:text-2xl bg-orange-400 px-3 md:px-6 py-2 text-white rounded-2xl"
+          className="flex items-center gap-2 font-bold text-2xl"
         >
-          🛍 ShopKart
+          <span className="text-3xl">🛍</span><span className="text-orange-500">ShopKart</span> 
         </Link>
 
         {/* Desktop Search */}
@@ -47,19 +49,19 @@ export default function Header() {
 
         {/* Right Side */}
         <div className="flex items-center gap-3 md:gap-5">
-          {/* User */}
+          {!token? <>
           {!hideLogInButton &&(
-            <Link to="/register" className="bg-orange-400 text-white px-5 py-2 rounded-lg font-medium">
+            <Link to="/register" className=" text-black  font-medium">
             Login
           </Link>
-          )}
-          
+          )}</>:<>
           <button
             onClick={handleMenuItem}
-            className="bg-orange-400 p-2 rounded-xl text-white hover:bg-orange-500 transition"
+            className="text-black hover:bg-orange-100 p-1 rounded-full transition"
           >
             {menuItem ? <X /> : <UserRound />}
-          </button>{" "}
+          </button>{" "}</>}
+
           {/* Cart */}
           <Link
             to="/cart"
@@ -82,20 +84,20 @@ export default function Header() {
       {menuItem && (
         <div className="absolute top-16 right-4 w-44 bg-white shadow-lg rounded-lg overflow-hidden z-50">
           <ul className="text-gray-700">
-            <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              Account
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+              <UserCircle2 />Account
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              Orders
+            <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center hover:text-orange-500">
+              <Package />Orders
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              Wishlist
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+              <Heart />Wishlist
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              Customer Care
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+              <Settings /> Settings
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 cursor-pointer">
-              Settings
+            <li className="hover:bg-gray-100 px-4 py-2  border-b cursor-pointer flex items-center hover:text-orange-500">
+            <LogOut />Log Out
             </li>
           </ul>
         </div>

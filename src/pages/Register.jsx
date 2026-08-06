@@ -1,7 +1,7 @@
 import { registerUser , checkPhoneNumber } from "../api/authApi";
 import { useState } from "react";
 import registerImage from "../assets/images/Online tech talks-pana.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 export default function Register() {
   const navigate = useNavigate()
@@ -54,9 +54,12 @@ export default function Register() {
       if (!userData.phone.trim()) {
         newErrors.phone = "Phone is required";
       }
-      if (!userData.password) {
-        newErrors.password = "password is required";
-      }
+      // if (!userData.password) {
+      //   newErrors.password = "password is required";
+      // }
+//        else if (userData.password.length < 8) {
+//   newErrors.password = "Password must be at least 8 characters";
+// }
       if (userData.email && !/\S+@\S+\.\S+/.test(userData.email)) {
         newErrors.email = "Enter a valid email";
       }
@@ -69,8 +72,9 @@ export default function Register() {
      navigate('/login')
     } catch (error) {
       console.log(error)
-      console.log(error.message)
-       setErrors({phone:error.response?.data?.message});
+      console.log(error.response)
+       setErrors({general:error.response?.data?.message|| "Registration failed"})
+// 
     }
   };
 
@@ -149,7 +153,11 @@ export default function Register() {
             )}
             </>
           )}
-
+          {errors.general && (
+  <p className="text-red-500 text-sm">
+    {errors.general}
+  </p>
+)}
           <p className="text-gray-500 text-xs ">
             By continuing, you agree to Flipkart's{" "}
             <span className="text-blue-600">Terms of Use</span> and{" "}
@@ -161,9 +169,9 @@ export default function Register() {
           >
             {step === 1 ? "continue" : "create Account"}
           </button>
-          <button className="w-full text-blue-600 shadow py-3 font-medium">
+          <Link to="/login" className="w-full text-blue-600 shadow py-3 font-medium">
             Existing User?Log in
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ import MainLayout from '../components/layouts/MainLayout'
 import Login from '../pages/Login'
 export default function AppRoute() {
   return (
-    <BrowserRouter>
+    <>
     <ScrollToTop />
    <Routes>
   <Route element={<MainLayout />}>
@@ -44,7 +44,7 @@ export default function AppRoute() {
     <Route path="/search" element={<Search />} />
     <Route path="/cart" element={<CartItem />} />
   </Route>
-</Routes>
-    </BrowserRouter>
+</Routes></>
+    
   )
 }

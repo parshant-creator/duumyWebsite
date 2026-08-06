@@ -5,7 +5,12 @@ export default function Footer() {
   return (
     <footer className="w-full bg-gray-900 text-white px-6 py-10  md:px-12 lg:px-20">
       <div className="flex flex-col gap-8">
-        <div className="font-bold text-2xl">🛍 ShopKart</div>
+          <div
+    className="flex items-center gap-2 font-bold text-2xl"
+  >
+    <span className="text-3xl">🛍️</span>
+      <span className="text-orange-500">ShopKart</span>
+  </div>
         <div className="flex flex-wrap gap-6 text-gray-300">
           <span className="cursor-pointer hover:text-white">About </span>
           <span className="cursor-pointer hover:text-white">Products </span>
