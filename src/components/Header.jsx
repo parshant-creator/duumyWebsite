@@ -82,22 +82,22 @@ export default function Header() {
 
       {/* Dropdown */}
       {menuItem && (
-        <div className="absolute top-16 right-4 w-44 bg-white shadow-lg rounded-lg overflow-hidden z-50">
-          <ul className="text-gray-700">
-            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+        <div className="absolute top-16 right-4 w-44 bg-gray-900 shadow-lg rounded-lg overflow-hidden z-50">
+          <ul className="text-white text-sm">
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <UserCircle2 />Account
             </li>
-            <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center hover:text-orange-500">
+            <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Package />Orders
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Heart />Wishlist
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center hover:text-orange-500">
+            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Settings /> Settings
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2  border-b cursor-pointer flex items-center hover:text-orange-500">
-            <LogOut />Log Out
+            <li className="hover:bg-gray-100 px-4 py-2  border-b cursor-pointer flex items-center gap-2 hover:text-orange-500">
+            <LogOut />LogOut
             </li>
           </ul>
         </div>
