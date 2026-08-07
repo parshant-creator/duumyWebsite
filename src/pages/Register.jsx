@@ -72,7 +72,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-70px)] flex justify-center items-center">
+    <div className="min-h-[calc(100vh-70px)] bg-gray-100 flex justify-center items-center">
       <div className="max-w-4xl w-full mx-4 shadow-md rounded-lg overflow-hidden flex flex-col justify-between md:flex-row  min-h-[550px]">
         <div className="hidden w-[35%] bg-blue-600 text-white p-10 md:flex flex-col justify-between">
           <div>

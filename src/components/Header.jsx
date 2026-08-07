@@ -84,9 +84,9 @@ export default function Header() {
       {menuItem && (
         <div className="absolute top-16 right-4 w-44 bg-gray-900 shadow-lg rounded-lg overflow-hidden z-50">
           <ul className="text-white text-sm">
-            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
-              <UserCircle2 />Account
-            </li>
+            <Link className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500"
+             to="/profile"><UserCircle2 />My Profile
+            </Link>
             <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Package />Orders
             </li>
