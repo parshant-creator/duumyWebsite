@@ -72,8 +72,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-70px)] flex justify-center items-center bg-gray-100">
-      <div className="max-w-4xl w-full mx-4 shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row bg-white min-h-[550px]">
+    <div className="min-h-[calc(100vh-70px)] flex justify-center items-center">
+      <div className="max-w-4xl w-full mx-4 shadow-md rounded-lg overflow-hidden flex flex-col justify-between md:flex-row  min-h-[550px]">
         <div className="hidden w-[35%] bg-blue-600 text-white p-10 md:flex flex-col justify-between">
           <div>
             <h2 className="text-3xl font-semibold">
@@ -93,7 +93,7 @@ export default function Register() {
             />
           </div>
         </div>
-          <div className="md:w-[65%] w-full flex flex-col justify-between px-6 py-8 md:p-10">
+          <div className="w-full md:w-[65%] flex flex-col flex-1 justify-between px-6 py-8 md:p-10 ">
           <div>
           <Link
             to="/"
@@ -109,7 +109,7 @@ export default function Register() {
               Create your ShopKart account
             </p>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ">
             {step === 1 && (
               <>
                 <input
@@ -176,10 +176,11 @@ export default function Register() {
             >
               {step === 1 ? "continue" : "create Account"}
             </button>
-          </div></div>
+          </div>
+          </div>
           <Link
             to="/login"
-            className="text-center text-sm text-blue-600 font-medium mt-auto"
+            className="mt-6 md:mt-auto text-center text-sm text-blue-600 font-medium"
           >
             Existing User?Log in
           </Link>

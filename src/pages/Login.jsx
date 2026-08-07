@@ -72,10 +72,10 @@ export default function Login() {
             />
           </div>
         </div>
-        <div className="md:w-[65%] w-full flex flex-col justify-between px-6 py-8 md:p-10 ">
+        <div className="md:w-[65%] w-full flex flex-col  px-6 py-8 md:p-10 ">
            <Link
     to="/"
-    className="flex items-center justify-center md:justify-start gap-2 mb-4"
+    className="flex items-center justify-center md:justify-start gap-2 mb-8"
   >
     <span className="text-3xl">🛍️</span>
     <span className="text-2xl font-bold">
