@@ -6,23 +6,23 @@ import ProductDescription from "../components/ProductDescription";
 import ScrollToTop from "../components/ScrollToTop";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+
+import MainLayout from "../components/layouts/MainLayout";
 
 export default function AppRoute() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register />} />{" "}
         <Route path="/login" element={<Login />} />
-        <Route path="/product/:id" element={<ProductDescription />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/cart" element={<CartItem />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDescription />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/cart" element={<CartItem />} />
+        </Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }
