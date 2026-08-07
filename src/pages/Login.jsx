@@ -17,20 +17,23 @@ export default function Login() {
       ...userData,
       [e.target.name]: e.target.value,
     });
+    setErrors({
+    ...errors,
+    [name]: "",
+    general: "",
+  });
   };
   const userLogin = async () => {
     try {
       const newErrors = {};
-      if (!userData.phone.trim()) {
-        newErrors({
-          phone: "Phone number is required",
-        });
+     
+       if (!userData.phone.trim()) {
+        newErrors.phone = "Phone is required";
       }
       if (!userData.password) {
-        newErrors({
-          password: "password is required",
-        });
+      newErrors.password = "Password is required";
       }
+      
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
         return;
@@ -48,8 +51,10 @@ export default function Login() {
     }
   };
   return (
+
     <div className="min-h-[calc(100vh-70px)] bg-gray-100 flex justify-center items-center">
-      <div className="max-w-4xl w-full mx-4 flex shadow-sm bg-white min-h-[550px]">
+      
+      <div className="max-w-4xl w-full mx-4  shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row bg-white min-h-[550px]">
         <div className="hidden md:flex flex-col justify-between w-[35%] bg-blue-600 text-white p-10">
           <div>
             <h2 className="text-3xl font-semibold">Login</h2>
@@ -67,24 +72,46 @@ export default function Login() {
             />
           </div>
         </div>
-        <div className="md:w-[65%] flex flex-col justify-between p-10 ">
-          <div className="flex flex-col gap-8">
+        <div className="md:w-[65%] w-full flex flex-col justify-between px-6 py-8 md:p-10 ">
+           <Link
+    to="/"
+    className="flex items-center justify-center md:justify-start gap-2 mb-4"
+  >
+    <span className="text-3xl">🛍️</span>
+    <span className="text-2xl font-bold">
+      Shop<span className="text-orange-500">Kart</span>
+    </span>
+  </Link>
+          <div className="md:hidden mb-8">
+            <p className="text-gray-500 text-md font-semibold">Login for the best shopping experience</p>
+          </div>
+          <div className="flex flex-col gap-4">
             <input
               onChange={handleInput}
               value={userData.phone}
               name="phone"
               type="tel"
               placeholder="Enter your mobile number"
-              className="outline-none py-2 w-full border-blue-600 border-b"
+              className="outline-none text-sm py-3 w-full border-blue-600 border-b"
             />
+            {errors.phone && (
+  <p className="text-red-500 text-xs mt-1">
+    {errors.phone}
+  </p>
+)}
             <input
               onChange={handleInput}
               value={userData.password}
               name="password"
               type="password"
               placeholder="Enter your password"
-              className="outline-none py-2 w-full border-blue-600 border-b"
+              className="outline-none text-sm py-3 w-full border-blue-600 border-b"
             />
+            {errors.password && (
+  <p className="text-red-500 text-xs mt-1">
+    {errors.phone}
+  </p>
+)}
             {errors.general && (
               <p className="text-red-500 text-sm">{errors.general}</p>
             )}
@@ -94,14 +121,21 @@ export default function Login() {
               <span className="text-blue-600">Privacy Policy.</span>
             </p>
             <button
-              className="w-full py-3 font-medium px-4 bg-orange-500 text-white"
+              className="w-full py-3 font-medium rounded-md text-white transition bg-orange-500  hover:bg-orange-600"
               onClick={userLogin}
             >
               Log in
             </button>
           </div>
-          <div className="text-center text-xs font-medium text-blue-600">
-            <Link to="/register">New to ShopKart? Create an Account</Link>
+          <div className="text-center mt-8 text-sm">
+            New to ShopKart?
+
+<Link
+  to="/register"
+  className="ml-1 text-blue-600 font-semibold hover:underline"
+>
+  Create an Account
+</Link>
           </div>
         </div>
       </div>
