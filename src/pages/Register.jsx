@@ -93,7 +93,7 @@ export default function Register() {
             />
           </div>
         </div>
-          <div className="w-full md:w-[65%] flex flex-col justify-between px-6 py-8 md:p-10 min-h-screen md:min-h-[550px]">
+          <div className="md:w-[65%] w-full flex flex-col justify-between px-6 py-8 md:p-10">
           <div>
           <Link
             to="/"
