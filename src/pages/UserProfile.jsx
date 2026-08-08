@@ -9,13 +9,18 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [navigate]);
   const fetchProfile = async () => {
     try {
       const response = await getUserProfile();
       setUser(response.user);
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
+        if (error.response?.status === 401) {
+          localStorage.removeItem("token");
+          setUser(null);
+          navigate("/login", { replace: true });
+        }
     } finally {
       setLoading(false);
     }
@@ -26,12 +31,7 @@ export default function UserProfile() {
       </div>
     </div>
   if (!user) {
-    return (
-      <div className="max-w-md mx-auto mt-10 p-6 text-center">
-        <h2>User profile not found</h2>
-        <p>Please login again.</p>
-      </div>
-    );
+    return null;
   }
   const handleLogout = () => {
   localStorage.removeItem("token");

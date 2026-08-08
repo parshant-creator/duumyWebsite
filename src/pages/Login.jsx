@@ -1,10 +1,12 @@
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../api/authApi";
+import { getUserProfile, loginUser } from "../api/authApi";
 import registerImage from "../assets/images/Online tech talks-pana.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthProvider";
 export default function Login() {
   const navigate = useNavigate();
+  const {setUser} = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const [userData, setUserData] = useState({
@@ -12,10 +14,10 @@ export default function Login() {
     password: "",
   });
   const handleInput = (e) => {
-    console.log(e.target);
+    const { name, value } = e.target;
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
     setErrors({
     ...errors,
@@ -43,6 +45,8 @@ export default function Login() {
       toast.success("Login successful");
 
       navigate("/");
+      const profileResponse = await getUserProfile();
+      setUser(profileResponse.user);
       console.log(response);
     } catch (error) {
       setErrors({
