@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const token = localStorage.getItem("token")
-  console.log(token)
   const navigate = useNavigate();
   const location = useLocation();
   const hideLogInButton = location.pathname ==="/register"

@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 
 import MainLayout from "../components/layouts/MainLayout";
 import UserProfile from "../pages/UserProfile";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function AppRoute() {
   return (
@@ -19,7 +20,7 @@ export default function AppRoute() {
         <Route path="/login" element={<Login />} />
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<ProtectedRoute ><UserProfile /></ProtectedRoute>} />
           <Route path="/product/:id" element={<ProductDescription />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<CartItem />} />

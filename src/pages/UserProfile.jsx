@@ -14,7 +14,6 @@ export default function UserProfile() {
     try {
       const response = await getUserProfile();
       setUser(response.user);
-      console.log(response.user);
     } catch (error) {
       console.log(error.response?.data?.message || error.message);
     } finally {
