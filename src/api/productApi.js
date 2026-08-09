@@ -1,4 +1,9 @@
 import api from './axios';
 export const getProducts = async () => {
-    return api.get('/product');
+    const response = await api.get('/product');
+    return response;
+}
+export const getProductById = async (id) => {
+    const response = await api.get(`/product/${id}`);
+    return response;
 }

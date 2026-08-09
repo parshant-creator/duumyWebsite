@@ -2,12 +2,12 @@ import { Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishList } from "../redux/slices/wishListSlice";
 import { Link } from "react-router-dom";
+import { addWishlist } from "../api/wishlistApi";
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const wishListItems = useSelector((state) => state.wishlist.wishlistItems);
-  console.log(wishListItems);
-  const isWishList = wishListItems.some((item) => item.id === product.id);
+  const isWishList = wishListItems.some((item) => item._id === product._id);
 
   return (
     <div
@@ -22,9 +22,17 @@ export default function ProductCard({ product }) {
              transition-all duration-300"
     >
       <button
-        onClick={(e) => {
+        onClick={async(e) => {
           e.stopPropagation();
-          dispatch(addToWishList(product));
+          try{
+            console.log(product._id)
+            const response =await addWishlist(product._id)
+            console.log(response.data)
+              dispatch(addToWishList(product));
+          }catch(error){
+            "Add Wishlist Error",
+            error.response?.data?.message || error.message
+          }
         }}
         className="cursor-pointer p-1.5 md:p-2 rounded-full z-40 bg-white shadow-md absolute top-2 right-2"
       >
@@ -35,7 +43,7 @@ export default function ProductCard({ product }) {
           }`}
         />
       </button>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product._id}`}>
         <div className="relative h-36 sm:h-40 md:h-48 flex justify-center items-center overflow-hidden z-30">
           {product.discount > 0 && (
             <span className="absolute z-20 top-2 left-2 bg-red-500 text-white text-[10px] md:text-xs px-2 py-1 rounded">

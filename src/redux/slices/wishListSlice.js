@@ -9,11 +9,11 @@ export const wishListSlice =createSlice ({
     reducers:{
         addToWishList:(state, action)=>{
             const product = state.wishlistItems.find(
-              (item)=> item.id === action.payload.id
+              (item)=> item._id === action.payload._id
             )
             if(product){
                 state.wishlistItems =state.wishlistItems.filter(
-                   (item)=> item.id !== action.payload.id
+                   (item)=> item._id !== action.payload._id
                 )
             }else{
                 state.wishlistItems.push({

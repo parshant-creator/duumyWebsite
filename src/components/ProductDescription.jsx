@@ -1,32 +1,55 @@
 import { Link, useParams } from "react-router-dom";
-import products from "../data/products";
 import { MapPin, Star, Van } from "lucide-react";
 import { useState } from "react";
 import NoProducts from "../components/NoProducts";
 import ProductCard from "./ProductCard";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
+import { getProductById, getProducts } from "../api/productApi";
+import { useEffect } from "react";
 export default function ProductDescription() {
-  const dispatch = useDispatch()
-  const {cartItems} = useSelector((state)=>state.cart)
-  console.log(cartItems)
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { cartItems } = useSelector((state) => state.cart);
+  const [product, setproduct] = useState(null);
+   const [allProducts, setAllProducts] = useState([]);
+   
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getProductById(id);
+        setproduct(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchProducts();
+  }, [id]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getProducts();
+        setAllProducts(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchProducts();
+  }, []);
+
 
   const [showMore, setShowMore] = useState(false);
-  const { id } = useParams();
-  const product = products.find((item) => item.id === Number(id));
   if (!product) {
     return <NoProducts />;
   }
-    const isInCart = cartItems.some(
-    (item)=>item.id === product.id
-  )
-  const relatedProduct = products.filter(
-    (item) => item.category === product.category && item.id !== product.id,
+  const isInCart = cartItems.some((item) => item._id === product._id);
+  const relatedProduct = allProducts.filter(
+    (item) => item.category === product.category && item._id !== product._id,
   );
-  const handleAddToCart = ()=>{
-    console.log("ok")
-    dispatch(addToCart(product))
-  }
+  const handleAddToCart = () => {
+    console.log("ok");
+    dispatch(addToCart(product));
+  };
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto p-4">
@@ -37,12 +60,13 @@ export default function ProductDescription() {
       </div>
       <div className="max-w-7xl  mx-auto lg:h-187.5 grid lg:grid-cols-2 p-4 lg:p-8">
         <div className="p-4 lg:p-8">
-           <div className="w-full lg:h-[500px] ">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-64 lg:h-full object-contain"
-          /></div>
+          <div className="w-full lg:h-[500px] ">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-64 lg:h-full object-contain"
+            />
+          </div>
         </div>
         <div className="flex flex-col min-h-0 p-4 lg:p-8">
           <div className=" flex-1 lg:overflow-y-auto min-h-0 hider-scrollbar ">
@@ -101,37 +125,38 @@ export default function ProductDescription() {
             </div>
           </div>
           <div className="lg:sticky lg:bottom-0 pt-5 flex justify-between  gap-3">
-            {
-  isInCart ? (
-   <Link to="/cart" className="flex-1">
-  <button className="w-full rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
-    Go To Cart
-  </button>
-</Link>
-  ) : (
-            <button
-            onClick={handleAddToCart}
-             className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
-              Add to Cart
-            </button>
-  )}
+            {isInCart ? (
+              <Link to="/cart" className="flex-1">
+                <button className="w-full rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer">
+                  Go To Cart
+                </button>
+              </Link>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold text-orange-500 hover:bg-orange-50 cursor-pointer"
+              >
+                Add to Cart
+              </button>
+            )}
             <button className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold bg-orange-500 text-white hover:bg-orange-600 cursor-pointer">
               Buy Now • ₹{product.price}
             </button>
           </div>
         </div>
       </div>
-     
-     <div className="w-full mt-12 px-4 py-6 bg-blue-50">
-  <h2 className="text-2xl font-bold mb-6">Similar Products</h2>
 
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 border-blue-500">
-    {relatedProduct.map((product) => (
-      // <Link key={product.id} to={`/product/${product.id}`}>
-        <ProductCard product={product} />
-      // </Link>
-    ))}
-  </div>
-</div></div>
+      <div className="w-full mt-12 px-4 py-6 bg-blue-50">
+        <h2 className="text-2xl font-bold mb-6">Similar Products</h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 border-blue-500">
+          {relatedProduct.map((product) => (
+            // <Link key={product.id} to={`/product/${product.id}`}>
+            <ProductCard product={product} />
+            // </Link>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

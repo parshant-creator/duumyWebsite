@@ -1,11 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import categories from "../data/categories";
 import products from "../data/products";
 import ProductCard from "./ProductCard";
 import NoProducts from "./NoProducts";
 import SkeletonCard from "./SkeletonCard";
+import { getProducts } from "../api/productApi";
 export default function Categories() {
+  const [apiProducts, setApiProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getProducts();
+        setApiProducts(response.data);
+        console.log(response);
+        console.log(response.data)
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   const [activeTab, setActiveTab] = useState("For You");
   const [loading, setLoading] = useState(false);
   const [showIcons, setShowIcons] = useState(true);
@@ -18,8 +33,8 @@ export default function Categories() {
   };
   const categoryProducts =
     activeTab === "For You"
-      ? products
-      : products.filter((product) => product.category === activeTab);
+      ? apiProducts
+      : apiProducts.filter((product) => product.category === activeTab);
 
   const lastScrollY = useRef(0);
   useEffect(() => {
@@ -82,7 +97,7 @@ export default function Categories() {
     {categoryProducts.length > 0 ? (
               categoryProducts.map((product) => (
                 // <Link key={product.id} to={`/product/${product.id}`}>
-                <ProductCard product={product} />
+                <ProductCard key={product._id} product={product} />
                 // </Link>
               ))
             ) : (
