@@ -40,7 +40,7 @@ export default function UserProfile() {
   return (
     <div className="min-h-screen p-10  bg-gray-100">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4   rounded-xl">
-        <div className="w-full md:w-[30%] shadow-lg p-6 flex flex-col gap-4">
+        <div className="w-full md:w-[30%] shadow-lg p-6 flex flex-col gap-4 bg-white">
           <p>Hello</p>
           <p>
             <strong>{user.name}</strong>
@@ -49,7 +49,7 @@ export default function UserProfile() {
             <Power />LogOut
           </button>
         </div>
-        <div className="w-full md:w-[70%] shadow-lg p-6 flex flex-col  gap-4">
+        <div className="w-full md:w-[70%] shadow-lg p-6 flex flex-col bg-white  gap-4">
           <strong>Email Address</strong>
           <p className="text-gray-700 border border-gray-400 bg-gray-200 p-2">{user.email || "Not added"}</p>
          

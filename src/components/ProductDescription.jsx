@@ -127,9 +127,9 @@ export default function ProductDescription() {
 
   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 border-blue-500">
     {relatedProduct.map((product) => (
-      <Link key={product.id} to={`/product/${product.id}`}>
+      // <Link key={product.id} to={`/product/${product.id}`}>
         <ProductCard product={product} />
-      </Link>
+      // </Link>
     ))}
   </div>
 </div></div>

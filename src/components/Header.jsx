@@ -89,9 +89,10 @@ export default function Header() {
             <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Package />Orders
             </li>
-            <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
-              <Heart />Wishlist
-            </li>
+            <Link className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500"
+             to="/wishlist" >
+            <Heart />Wishlist
+            </Link>
             <li className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Settings /> Settings
             </li>

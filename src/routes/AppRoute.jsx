@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import MainLayout from "../components/layouts/MainLayout";
 import UserProfile from "../pages/UserProfile";
 import ProtectedRoute from "../components/ProtectedRoute";
+import WishList from "../pages/WishList"
 
 export default function AppRoute() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoute() {
           <Route path="/product/:id" element={<ProductDescription />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<CartItem />} />
+          <Route path="/wishlist" element={<WishList />} />
         </Route>
       </Routes>
     </BrowserRouter>
