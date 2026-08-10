@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { MapPin, Star, Van } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import NoProducts from "../components/NoProducts";
 import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import { getProductById, getProducts } from "../api/productApi";
-import { useEffect } from "react";
+
 export default function ProductDescription() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -152,7 +152,7 @@ export default function ProductDescription() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 border-blue-500">
           {relatedProduct.map((product) => (
             // <Link key={product.id} to={`/product/${product.id}`}>
-            <ProductCard product={product} />
+            <ProductCard product={product} key={product._id} />
             // </Link>
           ))}
         </div>

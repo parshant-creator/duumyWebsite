@@ -1,9 +1,25 @@
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
+import { useEffect } from "react";
+import { getWishlist } from "../api/wishlistApi";
+import { setWishlist } from "../redux/slices/wishListSlice";
 
 export default function WishList() {
+  const dispatch = useDispatch();
   const wishListItems = useSelector((state) => state.wishlist.wishlistItems);
   console.log(wishListItems);
+  useEffect(()=>{
+    const fetchWishList = async()=>{
+      try{
+        const response = await getWishlist();
+        dispatch(setWishlist(response.data.wishlistItems))
+        console.log(response.data.wishlistItems)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    fetchWishList()
+  },[dispatch])
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-6 md:px-6 lg:px-8">
       <div className="mb-6">
@@ -26,7 +42,7 @@ export default function WishList() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
           {wishListItems.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       )}

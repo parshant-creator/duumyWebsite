@@ -1,8 +1,7 @@
 import { Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToWishList } from "../redux/slices/wishListSlice";
 import { Link } from "react-router-dom";
-import { addWishlist } from "../api/wishlistApi";
+import { addToWishList, removeWishListItems } from "../redux/slices/wishListSlice";
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -22,18 +21,30 @@ export default function ProductCard({ product }) {
              transition-all duration-300"
     >
       <button
-        onClick={async(e) => {
-          e.stopPropagation();
-          try{
-            console.log(product._id)
-            const response =await addWishlist(product._id)
-            console.log(response.data)
-              dispatch(addToWishList(product));
-          }catch(error){
-            "Add Wishlist Error",
-            error.response?.data?.message || error.message
-          }
-        }}
+      onClick={async (e) => {
+  e.stopPropagation();
+
+  try {
+    if (isWishList) {
+      const response = await removeWishlist(product._id);
+
+      console.log("Remove Wishlist:", response.data);
+
+      dispatch(removeWishListItems(product._id));
+    } else {
+      const response = await addWishlist(product._id);
+
+      console.log("Add Wishlist:", response.data);
+
+      dispatch(addToWishList(product));
+    }
+  } catch (error) {
+    console.log(
+      "Wishlist Error:",
+      error.response?.data?.message || error.message
+    );
+  }
+}}
         className="cursor-pointer p-1.5 md:p-2 rounded-full z-40 bg-white shadow-md absolute top-2 right-2"
       >
         <Heart
