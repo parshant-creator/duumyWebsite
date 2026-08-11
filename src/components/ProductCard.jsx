@@ -2,7 +2,7 @@ import { Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToWishList, removeWishListItems } from "../redux/slices/wishListSlice";
-
+import {addWishlist,removeWishlist} from "../api/wishlistApi"
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const wishListItems = useSelector((state) => state.wishlist.wishlistItems);
