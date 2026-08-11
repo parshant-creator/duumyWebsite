@@ -86,9 +86,9 @@ export default function Header() {
             <Link className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500"
              to="/profile"><UserCircle2 />My Profile
             </Link>
-            <li className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
+            <Link to="/order" className="hover:bg-gray-100 px-4 py-3 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500">
               <Package />Orders
-            </li>
+            </Link>
             <Link className="hover:bg-gray-100 px-4 py-2 border-b cursor-pointer flex items-center  gap-2 hover:text-orange-500"
              to="/wishlist" >
             <Heart />Wishlist

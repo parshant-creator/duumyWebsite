@@ -11,6 +11,7 @@ import MainLayout from "../components/layouts/MainLayout";
 import UserProfile from "../pages/UserProfile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import WishList from "../pages/WishList"
+import MyOrder from "../pages/MyOrder";
 
 export default function AppRoute() {
   return (
@@ -26,6 +27,7 @@ export default function AppRoute() {
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<CartItem />} />
           <Route path="/wishlist" element={<WishList />} />
+          <Route path="/order" element={<MyOrder />} />
         </Route>
       </Routes>
     </BrowserRouter>
