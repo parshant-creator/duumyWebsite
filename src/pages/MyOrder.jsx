@@ -52,7 +52,7 @@ export default function MyOrder() {
                       {new Date(order.createdAt).toLocaleDateString()}{" "}
                     </p>
                   </div>
-                  <p className="font-semibold"> ₹{order.totalAmount} </p>
+                  <p className="font-semibold">Toatl Amount: ₹{order.totalAmount} </p>
                 </div>
                 {order.items.map((item, index) => (
                   <div key={index}>
@@ -66,8 +66,9 @@ export default function MyOrder() {
                       <p className="font-medium"> {item.name} </p>{" "}
                       <p className="text-sm text-gray-500">
                         {" "}
-                        ₹{item.price} × {item.quantity}{" "}
+                        ₹{item.price}
                       </p>{" "}
+                      <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                     </div>
                     <div className="border-t pt-3 mt-2 flex justify-between">
                       {" "}

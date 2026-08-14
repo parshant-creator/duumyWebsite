@@ -7,35 +7,39 @@ import { createOrder } from "../api/orderApi";
 export default function Checkout() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
- const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
+  const buyNowItem = useSelector((state) => state.cart.buyNowItem);
 
-const buyNowItem = useSelector((state) => state.cart.buyNowItem);
-
-const checkoutItems = buyNowItem ? [buyNowItem] : cartItems;  
-  useEffect(()=>{
-    if(!loading && !user){
-      navigate("/login",{
-        state:{from:"/checkout"}
-      })
+  const checkoutItems = buyNowItem ? [buyNowItem] : cartItems;
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login", {
+        state: { from: "/checkout" },
+      });
     }
-  },[user,loading,navigate])
+  }, [user, loading, navigate]);
 
-  const handlePlaceOrder =async ()=>{
-    try{
+  const handlePlaceOrder = async () => {
+    try {
       const orderData = {
-        items:checkoutItems,
-        totalAmount:totalAmount
-      }
+        items: checkoutItems.map((item) => ({
+          product: item._id,
+          name: item.name,
+          image: item.image,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        totalAmount: totalAmount,
+      };
       const response = await createOrder(orderData);
-      if(response.data.success){
-        navigate("/order")
+      if (response.data.success) {
+        navigate("/order");
       }
-
-    }catch(error){
-      console.log(error.message)
+    } catch (error) {
+      console.log(error.message);
     }
-  }
+  };
   if (loading) {
     return (
       <div className="min-h-[60vh] flex justify-center items-center">
@@ -43,7 +47,6 @@ const checkoutItems = buyNowItem ? [buyNowItem] : cartItems;
       </div>
     );
   }
-
 
   if (checkoutItems.length === 0) {
     return (
@@ -131,7 +134,10 @@ const checkoutItems = buyNowItem ? [buyNowItem] : cartItems;
                 <span>₹{totalAmount}</span>
               </div>
 
-              <button onClick={handlePlaceOrder} className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium">
+              <button
+                onClick={handlePlaceOrder}
+                className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium"
+              >
                 Continue to Payment
               </button>
             </div>
