@@ -57,6 +57,10 @@ export const cartSlice = createSlice({
     clearBuyNow: (state) => {
       state.buyNowItem = null;
     },
+    clearCart:(state)=>{
+      state.cartItems = [];
+      state.totalQuantity =0;
+    }
   },
 });
 
@@ -66,6 +70,7 @@ export const {
   removeFromCart,
   buyNow,
   clearBuyNow,
+  clearCart
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

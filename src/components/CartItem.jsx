@@ -1,31 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart,decrementCartQuantity, addToCart } from "../redux/slices/cartSlice";
+import {
+  removeFromCart,
+  decrementCartQuantity,
+  addToCart,
+} from "../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function CartItem() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-const { cartItems, totalQuantity } = useSelector((state) => state.cart);
-const totalPrice = cartItems.reduce(
-  (total, item) => total + item.price * item.quantity,
-  0
-);
+  const { cartItems, totalQuantity } = useSelector((state) => state.cart);
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
   return (
     <>
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 ">
 
-        <h2 className="text-3xl font-bold mb-8">
-          Shopping Cart
-        </h2>
-
-        <div className="flex flex-col lg:flex-row gap-8">
-
+        <div className="flex flex-col lg:flex-row gap-8 " >
           {/* Cart Items */}
           <div className="flex-1 space-y-5">
-
             {cartItems.length === 0 ? (
-              <div className="text-center text-gray-500 py-20">
+              <div className="text-center text-gray-500 py-20  min-h-[60vh]">
                 Your cart is empty.
               </div>
             ) : (
@@ -43,44 +41,38 @@ const totalPrice = cartItems.reduce(
                   </div>
 
                   <div className="flex-1 flex flex-col justify-between">
-
                     <div>
+                      <h3 className="text-xl font-semibold">{item.name}</h3>
 
-                      <h3 className="text-xl font-semibold">
-                        {item.name}
-                      </h3>
+                      <div className="flex items-center gap-3 mt-3">
+                        <button
+                          onClick={() => dispatch(decrementCartQuantity(item))}
+                          className="w-8 h-8 border rounded-lg hover:bg-gray-100"
+                        >
+                          -
+                        </button>
 
-                     <div className="flex items-center gap-3 mt-3">
-  <button
-    onClick={() => dispatch(decrementCartQuantity(item))}
-    className="w-8 h-8 border rounded-lg hover:bg-gray-100"
-  >
-    -
-  </button>
+                        <span className="font-semibold text-lg">
+                          {item.quantity}
+                        </span>
 
-  <span className="font-semibold text-lg">
-    {item.quantity}
-  </span>
-
-  <button
-    onClick={() => dispatch(addToCart(item))}
-    className="w-8 h-8 border rounded-lg hover:bg-gray-100"
-  >
-    +
-  </button>
-</div>
+                        <button
+                          onClick={() => dispatch(addToCart(item))}
+                          className="w-8 h-8 border rounded-lg hover:bg-gray-100"
+                        >
+                          +
+                        </button>
+                      </div>
 
                       <p className="text-2xl font-bold text-orange-500 mt-3">
                         ₹{item.price * item.quantity}
                       </p>
-
                     </div>
 
                     <div className="flex gap-3 mt-5">
-
-                      <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 transition">
+                      {/* <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 transition">
                         Buy Now
-                      </button>
+                      </button> */}
 
                       <button
                         onClick={() =>
@@ -90,53 +82,42 @@ const totalPrice = cartItems.reduce(
                       >
                         Remove
                       </button>
-
                     </div>
-
                   </div>
-
                 </div>
               ))
             )}
-
           </div>
 
           {/* Order Summary */}
           {cartItems.length > 0 && (
             <div className="lg:w-80 h-fit bg-white border rounded-xl shadow p-6">
+              <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
 
-              <h3 className="text-2xl font-bold mb-6">
-                Order Summary
-              </h3>
-
-             <div className="flex justify-between mb-3">
-  <span>Total Quantity</span>
-  <span>{totalQuantity}</span>
-</div>
-
-<div className="flex justify-between mb-6">
-  <span>Total Price</span>
-  <span className="font-bold text-orange-500">
-    ₹{totalPrice}
-  </span>
-</div>
+              <div className="flex justify-between mb-3">
+                <span>Total Quantity</span>
+                <span>{totalQuantity}</span>
+              </div>
 
               <div className="flex justify-between mb-6">
                 <span>Total Price</span>
-                <span className="font-bold text-orange-500">
-                  ₹{totalPrice}
-                </span>
+                <span className="font-bold text-orange-500">₹{totalPrice}</span>
               </div>
 
-              <button  onClick={() => navigate("/checkout")} className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition">
+              <div className="flex justify-between mb-6">
+                <span>Total Price</span>
+                <span className="font-bold text-orange-500">₹{totalPrice}</span>
+              </div>
+
+              <button
+                onClick={() => navigate("/checkout")}
+                className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
+              >
                 Proceed to Checkout
               </button>
-
             </div>
           )}
-
         </div>
-
       </div>
     </>
   );
