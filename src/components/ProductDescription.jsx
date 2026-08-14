@@ -1,16 +1,31 @@
-import { Link, useParams } from "react-router-dom";
+import { Link ,useNavigate, useParams } from "react-router-dom";
 import { MapPin, Star, Van } from "lucide-react";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import NoProducts from "../components/NoProducts";
 import ProductCard from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/slices/cartSlice";
+import { addToCart , buyNow } from "../redux/slices/cartSlice";
 import { getProductById, getProducts } from "../api/productApi";
+import {AuthContext} from "../context/AuthProvider"
 
 export default function ProductDescription() {
+  const navigate = useNavigate();
+  const {user} = useContext(AuthContext);
+  const handleBuyNow = ()=>{
+    dispatch(buyNow(product))
+      if(!user){
+       navigate("/login",{
+        state:{
+          from:"/checkout"
+        }
+       })
+       return;
+      }
+      navigate("/checkout")
+  }
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { cartItems } = useSelector((state) => state.cart);
+  const cartItems  = useSelector((state) => state.cart.cartItems);
   const [product, setproduct] = useState(null);
    const [allProducts, setAllProducts] = useState([]);
    
@@ -139,7 +154,9 @@ export default function ProductDescription() {
                 Add to Cart
               </button>
             )}
-            <button className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold bg-orange-500 text-white hover:bg-orange-600 cursor-pointer">
+            <button
+            onClick={handleBuyNow}
+             className="flex-1 rounded-lg border border-orange-500 py-3 font-semibold bg-orange-500 text-white hover:bg-orange-600 cursor-pointer">
               Buy Now • ₹{product.price}
             </button>
           </div>
@@ -151,9 +168,7 @@ export default function ProductDescription() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 border-blue-500">
           {relatedProduct.map((product) => (
-            // <Link key={product.id} to={`/product/${product.id}`}>
             <ProductCard product={product} key={product._id} />
-            // </Link>
           ))}
         </div>
       </div>

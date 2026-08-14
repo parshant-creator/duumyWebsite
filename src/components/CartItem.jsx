@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart,decrementCartQuantity, addToCart } from "../redux/slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function CartItem() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
 const { cartItems, totalQuantity } = useSelector((state) => state.cart);
@@ -126,7 +128,7 @@ const totalPrice = cartItems.reduce(
                 </span>
               </div>
 
-              <button className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition">
+              <button  onClick={() => navigate("/checkout")} className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition">
                 Proceed to Checkout
               </button>
 

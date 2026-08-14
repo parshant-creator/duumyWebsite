@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { getUserProfile, loginUser } from "../api/authApi";
 import registerImage from "../assets/images/Online tech talks-pana.png";
 import { useContext, useState } from "react";
@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../context/AuthProvider";
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation()
   const {setUser} = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
@@ -44,7 +45,9 @@ export default function Login() {
       localStorage.setItem("token", response.data.token);
       toast.success("Login successful");
 
-      navigate("/");
+      const from = location.state?.from || "/";
+      navigate(from)
+      
       const profileResponse = await getUserProfile();
       setUser(profileResponse.user);
       console.log(response);

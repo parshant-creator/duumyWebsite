@@ -12,6 +12,7 @@ import UserProfile from "../pages/UserProfile";
 import ProtectedRoute from "../components/ProtectedRoute";
 import WishList from "../pages/WishList"
 import MyOrder from "../pages/MyOrder";
+import Checkout from "../pages/Checkout";
 
 export default function AppRoute() {
   return (
@@ -28,6 +29,7 @@ export default function AppRoute() {
           <Route path="/cart" element={<CartItem />} />
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/order" element={<MyOrder />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </BrowserRouter>
