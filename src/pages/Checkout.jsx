@@ -1,16 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
-import { useSelector } from "react-redux";
+import { clearCart, clearBuyNow } from "../redux/slices/cartSlice";
+import { useSelector , useDispatch } from "react-redux";
 import { createOrder } from "../api/orderApi";
 import { createOrderPayment, verifyPayment } from "../api/paymentApi";
 export default function Checkout() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   const buyNowItem = useSelector((state) => state.cart.buyNowItem);
-
+const [paymentStatus, setPaymentStatus] = useState("");
   const checkoutItems = buyNowItem ? [buyNowItem] : cartItems;
   useEffect(() => {
     if (!loading && !user) {
@@ -48,9 +50,11 @@ export default function Checkout() {
             console.log(paymentResponse);
             const verifyResponse = await verifyPayment(paymentResponse);
             if (verifyResponse.data.success) {
+              setPaymentStatus("success");
               await handlePlaceOrder(paymentResponse)
             }
           } catch (error) {
+            setPaymentStatus("failed");
             console.log(error);
           }
         },
@@ -63,6 +67,10 @@ export default function Checkout() {
         },
       };
       const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", function (response) {
+  console.log("Payment Failed:", response.error);
+  setPaymentStatus("failed");
+});
       razorpay.open();
     } catch (error) {
       console.log(error);
@@ -81,14 +89,19 @@ export default function Checkout() {
         totalAmount: totalAmount,
          paymentId: paymentResponse.razorpay_payment_id,
   razorpayOrderId: paymentResponse.razorpay_order_id,
-  paymentStatus: "paid",
+  paymentStatus: "Paid",
       };
       const response = await createOrder(orderData);
       if (response.data.success) {
+         if (buyNowItem) {
+        dispatch(clearBuyNow());
+      } else {
+        dispatch(clearCart());
+      }
         navigate("/order");
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response?.data || error.message);
     }
   };
   if (loading) {
@@ -181,7 +194,11 @@ export default function Checkout() {
                 <span>Total</span>
                 <span>₹{totalAmount}</span>
               </div>
-
+{paymentStatus === "failed" && (
+  <p className="mt-4 text-red-600 text-sm">
+    Payment failed. Please try again.
+  </p>
+)}
               <button
                 onClick={handlePayment}
                 className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium"

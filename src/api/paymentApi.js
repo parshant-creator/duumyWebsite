@@ -6,8 +6,8 @@ export const  createOrderPayment = async(amount)=>{
     return response;
 }
 export const  verifyPayment = async(paymentData)=>{
-    const response = await api.post('/payment/verify-payment',{
+    const response = await api.post('/payment/verify-payment',
         paymentData
-    });
+    );
     return response;
 }
