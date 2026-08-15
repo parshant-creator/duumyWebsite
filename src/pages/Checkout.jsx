@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useSelector } from "react-redux";
 import { createOrder } from "../api/orderApi";
-
+import { createOrderPayment, verifyPayment } from "../api/paymentApi";
 export default function Checkout() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
@@ -19,8 +19,56 @@ export default function Checkout() {
       });
     }
   }, [user, loading, navigate]);
-
-  const handlePlaceOrder = async () => {
+  const totalAmount = checkoutItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+  const handlePayment = async () => {
+    try {
+      const response = await createOrderPayment(totalAmount);
+      const rajorpayOredr = response.data.order;
+      const options = {
+        key: import.meta.env.VITE_TEST_API_KEY,
+        amount: rajorpayOredr.amount,
+        currency: rajorpayOredr.currency,
+        name: "Dummy E-Commerce",
+        description: "test-payment",
+        order_id: rajorpayOredr.id,
+        handler: async function (paymentResponse) {
+          try {
+            console.log(paymentResponse);
+            const verifyResponse = await verifyPayment(paymentResponse);
+            if (verifyResponse.data.success) {
+              await handlePlaceOrder(paymentResponse)
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        prefill: {
+          name: user.name,
+          contact: user.phone,
+        },
+        theme: {
+          color: "#f97316",
+        },
+      };
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handlePlaceOrder = async (paymentResponse) => {
     try {
       const orderData = {
         items: checkoutItems.map((item) => ({
@@ -31,6 +79,9 @@ export default function Checkout() {
           quantity: item.quantity,
         })),
         totalAmount: totalAmount,
+         paymentId: paymentResponse.razorpay_payment_id,
+  razorpayOrderId: paymentResponse.razorpay_order_id,
+  paymentStatus: "paid",
       };
       const response = await createOrder(orderData);
       if (response.data.success) {
@@ -61,10 +112,7 @@ export default function Checkout() {
       </div>
     );
   }
-  const totalAmount = checkoutItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
+
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8">
       <div className="max-w-6xl mx-auto">
@@ -135,7 +183,7 @@ export default function Checkout() {
               </div>
 
               <button
-                onClick={handlePlaceOrder}
+                onClick={handlePayment}
                 className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-medium"
               >
                 Continue to Payment
