@@ -45,11 +45,12 @@ export default function Login() {
       localStorage.setItem("token", response.data.token);
       toast.success("Login successful");
 
-      const from = location.state?.from || "/";
-      navigate(from)
+     
       
       const profileResponse = await getUserProfile();
       setUser(profileResponse.user);
+       const from = location.state?.from || "/";
+      navigate(from)
       console.log(response);
     } catch (error) {
       setErrors({
@@ -116,7 +117,7 @@ export default function Login() {
             />
             {errors.password && (
   <p className="text-red-500 text-xs mt-1">
-    {errors.phone}
+    {errors.password}
   </p>
 )}
             {errors.general && (
