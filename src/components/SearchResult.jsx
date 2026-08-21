@@ -1,13 +1,16 @@
-import products from "../data/products";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NoProducts from "./NoProducts";
 import { ArrowDownWideNarrow, SlidersHorizontal } from "lucide-react";
 import SearchProductCard from "./SearchProductCard";
-// import NoProducts from "./NoProducts";
+import { getProducts } from "../api/productApi";
+import SkeletonCard from "./SkeletonCard";
 export default function SearchResult() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [sortBar, setSortBar] = useState(false);
@@ -15,9 +18,45 @@ export default function SearchResult() {
   const [filterDrawer, setFilterDrawer] = useState(false);
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("q");
-  const filterProduct = products.filter((item) =>
-    item.name.toLowerCase().includes(keyword?.toLowerCase()),
-  );
+  const searchKeyword = keyword?.toLowerCase().trim() || "";
+  useEffect(() => {
+    const fecthData = async () => {
+      try {
+        const response = await getProducts();
+        setProducts(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fecthData();
+  }, []);
+
+  const filterProduct = products.filter((item) => {
+    const name = item.name?.toLowerCase() || "";
+    const brand = item.brand?.toLowerCase() || "";
+    const category = item.category?.toLowerCase() || "";
+
+    // Phone aur Mobile ko same category treat karna
+    const isPhoneSearch =
+      searchKeyword === "phone" || searchKeyword === "mobile";
+
+    if (isPhoneSearch) {
+      return (
+        category === "phone" ||
+        category === "mobile" ||
+        name.includes(searchKeyword) ||
+        brand.includes(searchKeyword)
+      );
+    }
+
+    return (
+      name.includes(searchKeyword) ||
+      brand.includes(searchKeyword) ||
+      category.includes(searchKeyword)
+    );
+  });
   const allCategories = filterProduct.map((item) => item.category);
   const uniqueCategories = [...new Set(allCategories)];
   const finalProducts =
@@ -68,11 +107,11 @@ export default function SearchResult() {
   };
 
   const handleSortBar = () => {
-    setFilterDrawer(false)
+    setFilterDrawer(false);
     setSortBar((sortBar) => !sortBar);
   };
   const handleFilterDrawer = () => {
-    setSortBar(false)
+    setSortBar(false);
     setFilterDrawer((filterDrawer) => !filterDrawer);
   };
   return (
@@ -149,9 +188,10 @@ export default function SearchResult() {
                 <label key={brand} className="flex gap-2">
                   <span>{brand}</span>
                   <input
-                  key={selectedBrand}
+                    key={selectedBrand}
                     onChange={(e) => {
-                      setSelectedBrand(e.target.value); setFilterDrawer(false);
+                      setSelectedBrand(e.target.value);
+                      setFilterDrawer(false);
                     }}
                     value={brand}
                     type="radio"
@@ -256,9 +296,16 @@ export default function SearchResult() {
 
           <div className="flex-1 md:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-5 sm:p-4">
-              {sortedProducts.length > 0 ? (
+              {loading ?(
+               
+                  Array.from({length:8}).map((_, index)=>(
+                    <SkeletonCard key={index} />
+                  ))
+                
+              )
+              :sortedProducts.length > 0 ? (
                 sortedProducts.map((product) => (
-                  <Link key={product.id} to={`/product/${product.id}`}>
+                  <Link key={product._id} to={`/product/${product._id}`}>
                     <SearchProductCard product={product} />
                   </Link>
                 ))

@@ -27,6 +27,7 @@ export default function ProductDescription() {
   const { id } = useParams();
   const cartItems  = useSelector((state) => state.cart.cartItems);
   const [product, setproduct] = useState(null);
+  const [loading, setLoading] = useState(true)
    const [allProducts, setAllProducts] = useState([]);
    
   useEffect(() => {
@@ -36,6 +37,8 @@ export default function ProductDescription() {
         setproduct(response.data);
       } catch (error) {
         console.log(error.message);
+      }finally{
+        setLoading(false)
       }
     };
     fetchProducts();
@@ -54,6 +57,13 @@ export default function ProductDescription() {
 
 
   const [showMore, setShowMore] = useState(false);
+  if(loading){
+    return (<div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="text-gray-500 text-lg">
+        Loading product...
+      </div>
+    </div>)
+  }
   if (!product) {
     return <NoProducts />;
   }

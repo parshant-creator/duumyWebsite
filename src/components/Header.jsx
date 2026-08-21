@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, UserRound, X, UserCircle2, LogOut, Settings, Heart, Package } from "lucide-react";
+import { ShoppingCart, Search, UserRound, X, UserCircle2, LogOut, Settings, Heart, Package, Loader } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const hideLogInButton = location.pathname ==="/register"
+  const isSearchPage = location.pathname ==="/search" && !location.search;
   const [searchTerm, setSearchTerm] = useState("");
   const [menuItem, setMenuItem] = useState(false);
 
@@ -18,7 +19,7 @@ export default function Header() {
 
   const handleInput = (e) => {
     if (e.key === "Enter" && searchTerm.trim()) {
-      navigate(`/search?q=${searchTerm.trim()}`);
+      navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
   return (
@@ -104,11 +105,14 @@ export default function Header() {
       )}
 
       {/* Mobile Search */}
+      {!isSearchPage &&(
+
       <div className="md:hidden px-4 pb-3">
         <div className="flex items-center border border-gray-300 bg-white rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-orange-300">
           <Search className="text-gray-500" size={18} />
           <div>
-            <input
+            
+                <input
               onFocus={() => navigate("/search")}
               type="text"
               placeholder="Search Products..."
@@ -116,7 +120,9 @@ export default function Header() {
             />
           </div>
         </div>
-      </div>
+      </div>      )}
+
+
     </nav>
   );
 }

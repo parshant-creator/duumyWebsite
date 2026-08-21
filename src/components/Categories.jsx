@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import categories from "../data/categories";
-import products from "../data/products";
 import ProductCard from "./ProductCard";
 import NoProducts from "./NoProducts";
 import SkeletonCard from "./SkeletonCard";
@@ -16,13 +15,15 @@ export default function Categories() {
         console.log(response.data)
       } catch (error) {
         console.error("Error fetching products:", error);
+      }finally{
+        setLoading(false)
       }
     };
     fetchProducts();
   }, []);
 
   const [activeTab, setActiveTab] = useState("For You");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showIcons, setShowIcons] = useState(true);
   const handleClick = (category) => {
     setLoading(true);
