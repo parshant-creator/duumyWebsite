@@ -29,7 +29,7 @@ export default function CartItem() {
             ) : (
               cartItems.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className="flex flex-col sm:flex-row gap-5 bg-white border rounded-xl shadow p-4"
                 >
                   <div className="w-full sm:w-40 h-40 bg-gray-100 rounded-lg">
@@ -76,7 +76,7 @@ export default function CartItem() {
 
                       <button
                         onClick={() =>
-                          dispatch(removeFromCart({ id: item.id }))
+                          dispatch(removeFromCart({ _id: item._id }))
                         }
                         className="border border-red-500 text-red-500 px-5 py-2 rounded-lg hover:bg-red-500 hover:text-white transition"
                       >
