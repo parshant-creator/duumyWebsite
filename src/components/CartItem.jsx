@@ -5,11 +5,12 @@ import {
   addToCart,
 } from "../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 export default function CartItem() {
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { cartItems, totalQuantity } = useSelector((state) => state.cart);
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -18,8 +19,7 @@ export default function CartItem() {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 py-8 ">
-
-        <div className="flex flex-col lg:flex-row gap-8 " >
+        <div className="flex flex-col lg:flex-row gap-8 ">
           {/* Cart Items */}
           <div className="flex-1 space-y-5">
             {cartItems.length === 0 ? (
@@ -110,7 +110,18 @@ export default function CartItem() {
               </div>
 
               <button
-                onClick={() => navigate("/checkout")}
+               onClick={() => {
+    if (!user) {
+      navigate("/login", {
+        state: {
+          from: "/checkout",
+        },
+      });
+      return;
+    }
+
+    navigate("/checkout");
+  }}
                 className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
               >
                 Proceed to Checkout
